@@ -3,13 +3,24 @@
 <mat-card>
   <mat-card-header>
     Player List
+    &nbsp; &nbsp;
+    <button mat-raised-button (click)="addPlayer()">
+      <mat-icon>add</mat-icon> Add Player
+    </button>
+    <button mat-raised-button (click)="importTournaments()">
+      <mat-icon>search</mat-icon> Import Tournaments
+    </button>
+    <button mat-raised-button (click)="calculateRatings()">
+      <mat-icon>code</mat-icon> Calculate
+    </button>
+    &nbsp; &nbsp;
     <br> <br>
   </mat-card-header>
 
   <mat-card-content>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-      <!-- Start-Place Column -->
+      <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
         <td mat-cell *matCellDef="let element">
@@ -19,49 +30,109 @@
         </td>
       </ng-container>
 
-      <!-- First-Name Column -->
-      <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+      <!-- pid Column -->
+      <ng-container matColumnDef="pid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> DSB-Number </th>
         <td mat-cell *matCellDef="let element">
           <mat-form-field>
-            <input name="firstName" matInput [(ngModel)]="element.firstName" [disabled]="element.mode!='edit'">
+            <input name="name" matInput [(ngModel)]="element.pid" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
 
-      <!-- Last-Name Column -->
-      <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+      <!-- birthyear Column -->
+      <ng-container matColumnDef="birthyear">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Year of Birth </th>
         <td mat-cell *matCellDef="let element">
           <mat-form-field>
-            <input name="lastName" matInput [(ngModel)]="element.lastName" [disabled]="element.mode!='edit'">
+            <input name="name" matInput [(ngModel)]="element.yearOfBirth" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
 
-      <!--
+      <!-- may old Column -->
+      <ng-container matColumnDef="mayOld">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> May 2018 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.mayOld" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- july old Column -->
+      <ng-container matColumnDef="julOld">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> July 2018 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.julOld" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- may old Column -->
+      <ng-container matColumnDef="sepOld">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sept 2018 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.sepOld" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- may old Column -->
+      <ng-container matColumnDef="novOld">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nov 2018 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.novOld" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- may old Column -->
+      <ng-container matColumnDef="janNew">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Jan 2019 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.janNew" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- may old Column -->
+      <ng-container matColumnDef="marNew">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> March 2019 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.marNew" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- may old Column -->
+      <ng-container matColumnDef="mayNew">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> May 2019 </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input name="name" matInput [(ngModel)]="element.mayNew" [disabled]="true">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="buttons">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
         <td mat-cell *matCellDef="let element">
-          <div *ngIf="element.mode=='edit'">
-            <button mat-raised-button (click)="update(element)">
-              <mat-icon>save</mat-icon>
+          <div>
+            <button mat-raised-button (click)="searchPlayer(element)">
+              <mat-icon>search</mat-icon>
             </button>
-            <button mat-raised-button (click)="cancel(element)">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </div>
-          <div *ngIf="element.mode!='edit'">
-            <button mat-raised-button (click)="edit(element)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-raised-button (click)="delete(element)">
-              <mat-icon>delete</mat-icon>
+            <button mat-raised-button (click)="getPlayerDetails(element)">
+              <mat-icon>details</mat-icon>
             </button>
           </div>
         </td>
       </ng-container>
-      -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

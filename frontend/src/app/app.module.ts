@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {
-  MatButtonModule, MatCardModule, MatDatepickerModule, MatExpansionModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatExpansionModule,
   MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatNativeDateModule,
   MatPaginatorModule, MatSelectModule, MatSlideToggleModule,
   MatSortModule,
@@ -16,6 +16,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LayoutModule} from "@angular/cdk/layout";
+import {NgxSoapModule} from "ngx-soap";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,9 @@ import {LayoutModule} from "@angular/cdk/layout";
     MatExpansionModule,
     MatSlideToggleModule,
     MatGridListModule,
+    NgxSoapModule,
+    MatDialogModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

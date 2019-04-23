@@ -15,10 +15,24 @@ public class Player {
     @Id @GeneratedValue
     private Long id;
 
-    private String name;
+    private Long pid;
 
-    public Player(String name) {
-        this.name = name;
+    private String firstName;
+    private String lastName;
+
+    private Integer yearOfBirth;
+
+    private String club;
+
+    public Player(String firstName, String lastName, Integer yearOfBirth, String club) {
+        this.firstName = firstName;
+        this.lastName=lastName;
+        this.yearOfBirth = yearOfBirth;
+        this.club = club;
+    }
+
+    public String getName() {
+        return this.firstName + " " + this.lastName;
     }
 
 }

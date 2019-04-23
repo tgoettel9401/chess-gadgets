@@ -22,7 +22,7 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     }
 
     private void addPlayers() {
-        Player player = new Player("Jana Schneider");
+        Player player = new Player("Jana", "Schneider", 2002, "Spvgg 1946 e.V. Stetten");
         playerRepository.save(player);
     }
 }
