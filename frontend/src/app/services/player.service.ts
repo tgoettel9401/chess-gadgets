@@ -4,17 +4,23 @@ import {Observable, of} from "rxjs";
 import {DewisService} from "./dewis.service";
 import {Player} from "../models/Player";
 import {catchError, tap} from "rxjs/operators";
+import {Tournament} from "../models/Tournament";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  constructor(private http: HttpClient, private dewisService: DewisService) { }
+  constructor(private http: HttpClient) { }
 
   getAllPlayers(): Observable<any> {
     let url = 'http://localhost:8080/players';
     return this.http.get(url);
+  }
+
+  addTournamentsToPlayer(player: Player, tournaments: Tournament[]): Observable<Player> {
+    let url = 'http://localhost:8080/players/' + player.id + '/addTournamentsAsList';
+    return this.http.patch<Player>(url, tournaments);
   }
 
   patchPlayer(player: Player): Observable<Player> {
@@ -24,6 +30,14 @@ export class PlayerService {
         tap((changedPlayer: Player) => console.log('Changed player with id=' + changedPlayer.id)),
         catchError(this.handleError<Player>('changePlayer'))
       );
+  }
+
+  getTournamentsBetween(player: Player): Observable<any> {
+    let startDate = new Date (2019,0,1);
+    let endDate = new Date (2019,5,23);
+    //let url = encodeURI('http://localhost:8080/players/' + player.id + '/getTournamentsBetween?startDate=' + startDate + '&endDate=' + endDate);
+    let url = 'http://localhost:8080/players/' + player.id + '/getTournamentsBetween?startDate=' + startDate.toISOString() + '&endDate=' + endDate.toISOString();
+    return this.http.get(url);
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

@@ -1,5 +1,3 @@
-import {Tournament} from "./Tournament";
-
 export class Player {
   id: number;
   pid: number;
@@ -14,7 +12,6 @@ export class Player {
   janNew: number;
   marNew: number;
   mayNew: number;
-  tournaments: Tournament[];
 
   // Mode stands for the table-mode
   mode: string;

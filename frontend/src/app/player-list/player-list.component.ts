@@ -5,6 +5,8 @@ import {PlayerService} from "../services/player.service";
 import {DewisService} from "../services/dewis.service";
 import {DewisPlayer} from "../models/DewisPlayer";
 import {Tournament} from "../models/Tournament";
+import {TournamentService} from "../services/tournament.service";
+import {log} from "util";
 
 @Component({
   selector: 'app-player-list',
@@ -22,7 +24,7 @@ export class PlayerListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private playerService: PlayerService, private dewisService: DewisService) { }
+  constructor(private playerService: PlayerService, private dewisService: DewisService, private tournamentService: TournamentService) { }
 
   ngOnInit() {
     this.getPlayers();
@@ -54,6 +56,7 @@ export class PlayerListComponent implements OnInit {
           tempTournament.ratingNew = tournament.ratingNew.$value;
           tournaments.push(tempTournament);
         }
+        this.playerService.addTournamentsToPlayer(element, tournaments).subscribe();
         element.tournaments = tournaments;
       }
     )
@@ -113,56 +116,77 @@ export class PlayerListComponent implements OnInit {
     )
   }
 
-
-  importTournaments() {
-    let startDate = new Date(2018, 4, 1);
-    let endDate = new Date(2019, 3, 31);
-    this.dewisService.findTournamentsByPeriod(startDate, endDate).subscribe(
-      res => {
-        let test = res.result.return.tournaments;
-        for(let tournament of res.result.return.tournaments.item) {
-          let test = tournament;
-          for (let player of this.players) {
-            let test2 = player.tournaments;
-            for (let playerTournament of player.tournaments) {
-              let test3 = playerTournament;
-              if (playerTournament.tcode == tournament.tcode.$value) {
-                playerTournament.calculated = tournament.computedOn.$value;
-                playerTournament.end = tournament.finishedOn.$value;
-              }
-            }
-          }
-        }
-      },
+  importTournamentsAndSave() {
+    let startDate = new Date(2018,0,1);
+    let endDate = new Date(2019, 0, 1);
+    this.tournamentService.deleteAllTournaments().subscribe(
+      () => {},
       error => console.log(error),
+      () => {
+        this.dewisService.findTournamentsByPeriod(startDate, endDate).subscribe(
+          res => {
+            let tournaments = [];
+              for(let tournament of res.result.return.tournaments.item) {
+              let tournamentForImport = new Tournament();
+              tournamentForImport.calculatedOn = new Date(tournament.computedOn.$value);
+              tournamentForImport.finishedOn = new Date(tournament.finishedOn.$value);
+              tournamentForImport.tcode = tournament.tcode.$value;
+              tournamentForImport.tname = tournament.tname.$value;
+              tournamentForImport.tid = tournament.tid.$value;
+              // Rating old and Rating new are still empty because they are only available on Tournament attached with player.
+              //this.tournamentService.postTournament(tournamentForImport).subscribe();
+                tournaments.push(tournamentForImport);
+            }
+              this.tournamentService.postMultipleTournaments(tournaments).subscribe();
+
+          },
+          error => console.log(error),
+          () => {
+            let startDate = new Date(2019,0,1);
+            let endDate = new Date(2020, 0, 1);
+            this.dewisService.findTournamentsByPeriod(startDate, endDate).subscribe(
+              res => {
+                let tournaments = [];
+                for(let tournament of res.result.return.tournaments.item) {
+                  let tournamentForImport = new Tournament();
+                  tournamentForImport.calculatedOn = new Date(tournament.computedOn.$value);
+                  tournamentForImport.finishedOn = new Date(tournament.finishedOn.$value);
+                  tournamentForImport.tcode = tournament.tcode.$value;
+                  tournamentForImport.tname = tournament.tname.$value;
+                  tournamentForImport.tid = tournament.tid.$value;
+                  // Rating old and Rating new are still empty because they are only available on Tournament attached with player.
+                  //this.tournamentService.postTournament(tournamentForImport).subscribe();
+                  tournaments.push(tournamentForImport);
+                }
+                this.tournamentService.postMultipleTournaments(tournaments).subscribe();
+              },
+              error => console.log(error),
+              () => {}
+            );
+          }
+        );
+      }
     );
-    let test = "test";
-    test = "done";
   }
+
 
   calculateRatings() {
-    let mayOld = new Date (2018,4, 2);
-    let julOld = new Date (2018,6,2);
-    let sepOld = new Date (2018,8,2);
-    let novOld = new Date (2018,10,2);
-    let janNew = new Date (2019,0,2);
-    let marNew = new Date (2019,2,2);
-    let mayNew = new Date (2019,4,2);
-    for(let player of this.players) {
-      let mayOldTournament = 0;
-      let julOldTournaemnt = 0;
-      let sepOldTournament = 0;
-      let novOldTournament = 0;
-      let janNewTournament = 0;
-      let marNewTournament = 0;
-      let mayNewTournament = 0;
-      for (let tournament of player.tournaments) {
-        let test = (tournament.end > mayOldTournament.end && tournament.end < mayOld);
-        if (tournament.end > mayOldTournament.end && tournament.end < mayOld)
-          mayOldTournament = tournament;
+    let players = [];
+    this.playerService.getAllPlayers().subscribe(
+      res => players = res._embedded.players,
+      error => log.console(error),
+      () => {
+        for(let player of players) {
+          let tournamentList = [];
+          this.playerService.getTournamentsBetween(player).subscribe(
+            res => tournamentList = res
+          );
+        }
       }
-      player.mayOld = mayOldTournament.ratingNew;
+    );
 
-    }
+
+
   }
+
 }

@@ -3,8 +3,8 @@ export class Tournament {
   tid: number;
   tcode: string;
   tname: string;
-  calculated: Date;
-  end: Date;
+  calculatedOn: Date;
+  finishedOn: Date;
   ratingOld: number;
   ratingNew: number;
   
