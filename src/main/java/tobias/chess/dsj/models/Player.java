@@ -44,7 +44,4 @@ public class Player {
     public void setTournaments(List<PlayerTournament> tournaments) {
         this.tournaments = tournaments;
     }
-
-
-
 }

@@ -4,11 +4,14 @@
   <mat-card-header>
     Player List
     &nbsp; &nbsp;
-    <button mat-raised-button (click)="addPlayer()">
-      <mat-icon>add</mat-icon> Add Player
-    </button>
     <button mat-raised-button (click)="importTournamentsAndSave()">
-      <mat-icon>search</mat-icon> Import Tournaments
+      <mat-icon>import_export</mat-icon> Import Tournaments
+    </button>
+    <button mat-raised-button (click)="importPlayerIds()">
+      <mat-icon>import_export</mat-icon> Import Player Ids
+    </button>
+    <button mat-raised-button (click)="importPlayerDetails()">
+      <mat-icon>import_export</mat-icon> Import Player Tournaments
     </button>
     <button mat-raised-button (click)="calculateRatings()">
       <mat-icon>code</mat-icon> Calculate
@@ -42,7 +45,7 @@
 
       <!-- birthyear Column -->
       <ng-container matColumnDef="birthyear">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Year of Birth </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="small"> Year of Birth </th>
         <td mat-cell *matCellDef="let element">
           <mat-form-field>
             <input name="name" matInput [(ngModel)]="element.yearOfBirth" [disabled]="true">
@@ -54,8 +57,8 @@
       <ng-container matColumnDef="mayOld">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> May 2018 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.mayOld" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[1]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
@@ -64,8 +67,8 @@
       <ng-container matColumnDef="julOld">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> July 2018 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.julOld" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[2]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
@@ -74,8 +77,8 @@
       <ng-container matColumnDef="sepOld">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Sept 2018 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.sepOld" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[3]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
@@ -84,8 +87,8 @@
       <ng-container matColumnDef="novOld">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nov 2018 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.novOld" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[4]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
@@ -94,8 +97,8 @@
       <ng-container matColumnDef="janNew">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Jan 2019 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.janNew" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[5]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
@@ -104,8 +107,8 @@
       <ng-container matColumnDef="marNew">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> March 2019 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.marNew" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[6]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>
@@ -114,8 +117,8 @@
       <ng-container matColumnDef="mayNew">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> May 2019 </th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
-            <input name="name" matInput [(ngModel)]="element.mayNew" [disabled]="true">
+          <mat-form-field class="small">
+            <input name="name" matInput [(ngModel)]="element.ratings[7]" [disabled]="true">
           </mat-form-field>
         </td>
       </ng-container>

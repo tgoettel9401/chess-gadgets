@@ -11,6 +11,7 @@ import tobias.chess.dsj.repositories.PlayerTournamentRepository;
 import tobias.chess.dsj.repositories.TournamentRepository;
 
 import javax.transaction.Transactional;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,41 @@ public class PlayerController {
             @PathVariable("id") long id) {
         Player player = this.playerRepository.findById(id).get();
         this.playerTournamentRepository.deleteAllByPlayer(player);
+    }
+
+    @GetMapping("players/{id}/getRatings")
+    public List<Integer> getRatings(
+            @PathVariable("id") long id) {
+        Player player = this.playerRepository.findById(id).get();
+        List<Integer> ratings = new ArrayList<>();
+        for (ZonedDateTime date : this.getDates()) {
+            Integer tempRating = 99999;
+            PlayerTournament tournament = this.playerTournamentRepository.findFirstByPlayerAndFinishedOnBeforeOrderByFinishedOnDesc(player, date);
+            tempRating = tournament.getRatingNew();
+            ratings.add(tempRating);
+        }
+        return ratings;
+    }
+
+    private List<ZonedDateTime> getDates() {
+        List<ZonedDateTime> dates = new ArrayList<>();
+        ZonedDateTime date1 = ZonedDateTime.of(2018,3,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date2 = ZonedDateTime.of(2018,5,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date3 = ZonedDateTime.of(2018,7,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date4 = ZonedDateTime.of(2018,9,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date5 = ZonedDateTime.of(2018,11,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date6 = ZonedDateTime.of(2019,1, 1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date7 = ZonedDateTime.of(2019,3,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date8 = ZonedDateTime.of(2019,5,1,0,0,0,0, ZoneOffset.UTC);
+        dates.add(date1);
+        dates.add(date2);
+        dates.add(date3);
+        dates.add(date4);
+        dates.add(date5);
+        dates.add(date6);
+        dates.add(date7);
+        dates.add(date8);
+        return dates;
     }
 
 }

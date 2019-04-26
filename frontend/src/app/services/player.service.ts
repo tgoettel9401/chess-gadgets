@@ -40,6 +40,11 @@ export class PlayerService {
     return this.http.get(url);
   }
 
+  getRatings(player: Player): Observable<any> {
+    let url = 'http://localhost:8080/players/' + player.id + '/getRatings';
+    return this.http.get(url);
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
