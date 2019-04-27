@@ -76,6 +76,7 @@ public class PlayerController {
             tempRating = tournament.getRatingNew();
             ratings.add(tempRating);
         }
+        player.setRatings(ratings.toArray(Integer[]::new));
         return ratings;
     }
 

@@ -4,8 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,9 +23,13 @@ public class Player {
     private String firstName;
     private String lastName;
 
-    private Integer yearOfBirth;
+    private Integer yearOfBirth =0;
 
-    private String club;
+    private String club = "Club";
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Integer[] ratings = new Integer[0];
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
@@ -35,6 +41,7 @@ public class Player {
         this.lastName=lastName;
         this.yearOfBirth = yearOfBirth;
         this.club = club;
+        this.ratings = new Integer[0];
     }
 
     public String getName() {

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -26,9 +27,9 @@ public class PlayerTournament {
 
     private String tname;
 
-    private ZonedDateTime calculatedOn;
+    private ZonedDateTime calculatedOn = ZonedDateTime.of(2018,1,1,0,0,0,0, ZoneOffset.UTC);
 
-    private ZonedDateTime finishedOn;
+    private ZonedDateTime finishedOn = ZonedDateTime.of(2018,1,1,0,0,0,0, ZoneOffset.UTC);
 
     private Integer ratingOld;
 

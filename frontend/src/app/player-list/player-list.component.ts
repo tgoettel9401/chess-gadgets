@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Player} from "@angular/core/src/render3/interfaces/player";
 import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {PlayerService} from "../services/player.service";
@@ -6,8 +6,6 @@ import {DewisService} from "../services/dewis.service";
 import {DewisPlayer} from "../models/DewisPlayer";
 import {Tournament} from "../models/Tournament";
 import {TournamentService} from "../services/tournament.service";
-import {log} from "util";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-player-list',
@@ -19,20 +17,19 @@ export class PlayerListComponent implements OnInit {
   players: Player[];
   dewisPlayers: DewisPlayer[];
 
-  ratings = []; // 8 Ratings due to 8 columns
-  dates = []; // 8 Dates due to 8 columns
-
   // Table fields
   dataSource: MatTableDataSource<Player>;
   displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private playerService: PlayerService, private dewisService: DewisService, private tournamentService: TournamentService) { }
+  constructor(private playerService: PlayerService, private dewisService: DewisService, private tournamentService: TournamentService) {
+
+  }
 
   ngOnInit() {
     this.getPlayers();
-    this.displayedColumns = ['name', 'pid', 'mayOld', 'julOld', 'sepOld', 'novOld', 'janNew', 'marNew', 'mayNew', 'buttons'];
+    this.displayedColumns = ['name', 'pid', 'birthyear', 'mayOld', 'julOld', 'sepOld', 'novOld', 'janNew', 'marNew', 'mayNew', 'buttons'];
   }
 
   getPlayers() {
@@ -72,8 +69,8 @@ export class PlayerListComponent implements OnInit {
     this.dewisService.findPlayerByName(element.firstName, element.lastName).subscribe(
       res => {
         // If only one player is found, this player can be set as the correct player.
-        if (res.result.return.members.item.length == 1) {
-          element.pid = res.result.return.member.item[0].pid;
+        if (!Array.isArray(res.result.return.members.item)) {
+          element.pid = res.result.return.members.item.pid.$value;
         }
 
         // If more than one player is found, it is checked if by using birthyear the result is unique.
@@ -207,8 +204,8 @@ export class PlayerListComponent implements OnInit {
           this.dewisService.findPlayerByName(playerOut.firstName, playerOut.lastName).subscribe(
             res => {
               // If only one player is found, this player can be set as the correct player.
-              if (res.result.return.members.item.length == 1) {
-                playerOut.pid = res.result.return.member.item[0].pid;
+              if (!Array.isArray(res.result.return.members.item)) {
+                playerOut.pid = res.result.return.members.item.pid.$value;
               }
 
               // If more than one player is found, it is checked if by using birthyear the result is unique.
@@ -249,16 +246,21 @@ export class PlayerListComponent implements OnInit {
                     playerOut.pid = correctPlayers2[0].pid.$value;
                   }
                 }
+
               }
+              this.playerService.patchPlayer(playerOut).subscribe(
+                () => {this.updateTable(players)},
+                error => console.log(error),
+              );
             },
 
             error => console.log(error),
             () => {
-              this.playerService.patchPlayer(playerOut).subscribe();
-              this.updateTable(players);
+
             },
           )
         }
+
       }
     )
 

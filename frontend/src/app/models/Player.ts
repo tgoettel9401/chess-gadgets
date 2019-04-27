@@ -15,4 +15,9 @@ export class Player {
 
   // Mode stands for the table-mode
   mode: string;
+
+  Player(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 }
