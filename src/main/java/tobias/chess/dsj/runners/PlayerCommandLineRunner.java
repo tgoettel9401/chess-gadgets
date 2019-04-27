@@ -22,8 +22,8 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     }
 
     private void addPlayers() {
-        Player player1 = new Player("Jana", "Schneider", 2002, "Spvgg 1946 e.V. Stetten");
-        Player player2 = new Player("Tobias", "Göttel", 1994, "VfL Sindelfingen");
+        Player player1 = new Player("Tobias", "Göttel", 1994, "VfL Sindelfingen");
+        Player player2 = new Player("Lukas", "Göttel", 1998, "SC Niedermohr");
         playerRepository.save(player1);
         playerRepository.save(player2);
     }
