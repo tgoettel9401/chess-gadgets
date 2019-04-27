@@ -11,6 +11,8 @@ import tobias.chess.dsj.repositories.PlayerTournamentRepository;
 import tobias.chess.dsj.repositories.TournamentRepository;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.Reader;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;

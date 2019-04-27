@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import {DewisService} from "./dewis.service";
 import {Player} from "../models/Player";
 import {catchError, tap} from "rxjs/operators";
 import {Tournament} from "../models/Tournament";
