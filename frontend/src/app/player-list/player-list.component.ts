@@ -164,7 +164,9 @@ export class PlayerListComponent implements OnInit {
                 this.tournamentService.postMultipleTournaments(tournaments).subscribe();
               },
               error => console.log(error),
-              () => {}
+              () => {
+
+              }
             );
           }
         );
@@ -282,7 +284,10 @@ export class PlayerListComponent implements OnInit {
                 tempTournament.tname = tournament.tname.$value;
                 tempTournament.tcode = tournament.tcode.$value;
                 tempTournament.ratingOld = tournament.ratingOld.$value;
-                tempTournament.ratingNew = tournament.ratingNew.$value;
+                if (!isNaN(tournament.ratingNew))
+                  tempTournament.ratingNew = tournament.ratingNew.$value;
+                else
+                  tempTournament.ratingNew = tempTournament.ratingOld;
                 tournaments.push(tempTournament);
               }
               playerOut.tournaments = tournaments;
