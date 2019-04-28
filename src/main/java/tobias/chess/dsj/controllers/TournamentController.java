@@ -17,18 +17,18 @@ public class TournamentController {
         this.tournamentRepository = tournamentRepository;
     }
 
-    @GetMapping("tournaments/deleteAllTournaments")
+    @GetMapping("api/tournaments/deleteAllTournaments")
     public void deleteAllTournaments() {
         this.tournamentRepository.deleteAll();
     }
 
-    @PostMapping("tournaments/addTournamentsAsList")
+    @PostMapping("api/tournaments/addTournamentsAsList")
     public List<Tournament> addTournamentsAsList(@RequestBody List<Tournament> tournamentList) {
         tournamentList = this.tournamentRepository.saveAll(tournamentList);
         return tournamentList;
     }
 
-    @GetMapping("tournaments/getByCodeAndName")
+    @GetMapping("api/tournaments/getByCodeAndName")
     public Tournament getByTcodeAndName(@RequestParam("tcode") String tcode, @RequestParam("tname")String tname) {
         return this.tournamentRepository.findFirstByTcodeAndAndTname(tcode, tname);
     }

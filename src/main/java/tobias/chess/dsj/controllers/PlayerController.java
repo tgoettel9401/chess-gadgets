@@ -33,7 +33,7 @@ public class PlayerController {
         this.playerTournamentRepository = playerTournamentRepository;
     }
 
-    @PatchMapping("players/{id}/addTournamentsAsList")
+    @PatchMapping("api/players/{id}/addTournamentsAsList")
     public Player addTournamentsAsList(@PathVariable("id") Long id, @RequestBody List<PlayerTournament> tournamentList) {
         Player player = this.playerRepository.findById(id).get();
         List<PlayerTournament> playerTournamentList = new ArrayList<>();
@@ -52,7 +52,7 @@ public class PlayerController {
         return player;
     }
 
-    @GetMapping("players/{id}/getLatestTournamentBeforeDate")
+    @GetMapping("api/players/{id}/getLatestTournamentBeforeDate")
     public PlayerTournament getLatestTournamentBeforeDate(
             @PathVariable("id") long id,
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime date) {
@@ -60,14 +60,14 @@ public class PlayerController {
         return playerTournamentRepository.findFirstByPlayerAndFinishedOnBeforeOrderByFinishedOnDesc(player, date);
     }
 
-    @GetMapping("players/{id}/deleteAllTournaments")
+    @GetMapping("api/players/{id}/deleteAllTournaments")
     public void deleteAllTournaments(
             @PathVariable("id") long id) {
         Player player = this.playerRepository.findById(id).get();
         this.playerTournamentRepository.deleteAllByPlayer(player);
     }
 
-    @GetMapping("players/{id}/getRatings")
+    @GetMapping("api/players/{id}/getRatings")
     public List<Integer> getRatings(
             @PathVariable("id") long id) {
         Player player = this.playerRepository.findById(id).get();

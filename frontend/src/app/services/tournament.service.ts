@@ -12,13 +12,15 @@ export class TournamentService {
 
   constructor(private http: HttpClient) { }
 
+  baseUrl = 'http://localhost:8080/api/';
+
   deleteAllTournaments(): Observable<any> {
-    let url = 'http://localhost:8080/tournaments/deleteAllTournaments';
+    let url = this.baseUrl + 'tournaments/deleteAllTournaments';
     return this.http.get(url);
   }
 
   postMultipleTournaments(tournaments: Tournament[]): Observable<Tournament> {
-    let url = 'http://localhost:8080/tournaments/addTournamentsAsList';
+    let url = this.baseUrl + 'tournaments/addTournamentsAsList';
     return this.http.post<any>(url, tournaments);
   }
 

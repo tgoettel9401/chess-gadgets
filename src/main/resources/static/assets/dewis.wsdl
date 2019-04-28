@@ -1,0 +1,379 @@
+<wsdl:definitions xmlns:tns="https://dwz.svw.info/services/soap/" targetNamespace="https://dwz.svw.info/services/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:message name="unionRatingListSoapIn">
+    <wsdl:part name="vkz" type="s:string">
+      <s:documentation>
+        id of the union
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="minAge" type="s:int">
+      <s:documentation>
+        number
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="maxAge" type="s:int">
+      <s:documentation>
+        number
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="gender" type="s:string">
+      <s:documentation>
+        one of 'm', 'f', ''
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unionRatingListSoapOut">
+    <wsdl:part name="return" type="tns:array" />
+  </wsdl:message>
+  <wsdl:message name="tournamentSoapIn">
+    <wsdl:part name="tcode" type="s:string">
+      <s:documentation>
+        tournament code
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="tournamentCardForIdSoapIn">
+    <wsdl:part name="pid" type="s:int">
+      <s:documentation>
+        member id
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentCardForIdSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="tournamentCardForZpsSoapIn">
+    <wsdl:part name="zps" type="s:string">
+      <s:documentation>
+        e.g. C1234-567
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentCardForZpsSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="tournamentsByPeriodSoapIn">
+    <wsdl:part name="since" type="s:date" />
+    <wsdl:part name="until" type="s:date" />
+    <wsdl:part name="vkz" type="s:string" />
+    <wsdl:part name="bSubs" type="s:boolean">
+      <s:documentation>
+        whether to include tournaments of sub-organizations
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="id" type="s:int">
+      <s:documentation>
+        assessors id
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="tname" type="s:string">
+      <s:documentation>
+        (part of) tournament name
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentsByPeriodSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="tournamentPairingsSoapIn">
+    <wsdl:part name="tcode" type="s:string">
+      <s:documentation>
+        tournament code
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentPairingsSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="tournamentPairingsByPlayerSoapIn">
+    <wsdl:part name="tcode" type="s:string">
+      <s:documentation>
+        tournament code
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="member" type="s:int">
+      <s:documentation>
+        id
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentPairingsByPlayerSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="bestOfFederationSoapIn">
+    <wsdl:part name="vkz" type="s:string" />
+    <wsdl:part name="limit" type="s:int" />
+    <wsdl:part name="minAge" type="s:int" />
+    <wsdl:part name="maxAge" type="s:int" />
+    <wsdl:part name="gender" type="tns:char" />
+  </wsdl:message>
+  <wsdl:message name="bestOfFederationSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="searchByNameSoapIn">
+    <wsdl:part name="surename" type="s:string" />
+    <wsdl:part name="firstname" type="s:string" />
+    <wsdl:part name="start" type="s:int" />
+    <wsdl:part name="length" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="searchByNameSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="organizationsSoapIn">
+    <wsdl:part name="vkz" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="organizationsSoapOut">
+    <wsdl:part name="return" type="tns:array" />
+  </wsdl:message>
+  <wsdl:message name="layersSoapIn" />
+  <wsdl:message name="layersSoapOut">
+    <wsdl:part name="return" type="tns:array" />
+  </wsdl:message>
+  <wsdl:message name="ratingOfficerSoapIn">
+    <wsdl:part name="assessors" type="tns:id">
+      <s:documentation>
+        id
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ratingOfficerSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:message name="tournamentsByMemberSoapIn">
+    <wsdl:part name="since" type="s:date" />
+    <wsdl:part name="until" type="s:date" />
+    <wsdl:part name="v" type="tns:char">
+      <s:documentation>
+        first char of organization (vkz)
+      </s:documentation>
+    </wsdl:part>
+    <wsdl:part name="page" type="s:int" />
+    <wsdl:part name="number" type="s:int">
+      <s:documentation>
+        of items to return
+      </s:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tournamentsByMemberSoapOut">
+    <wsdl:part name="return" type="tns:object" />
+  </wsdl:message>
+  <wsdl:portType name="WebdienstSoap">
+    <wsdl:operation name="unionRatingList" parameterOrder="vkz minAge maxAge gender">
+      <wsdl:documentation>
+        this list shows all union members with their latest rating number
+        only unions but no federations
+      </wsdl:documentation>
+      <wsdl:input message="tns:unionRatingListSoapIn" />
+      <wsdl:output message="tns:unionRatingListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournament">
+      <wsdl:documentation>
+        returns basic informations and evaluations
+      </wsdl:documentation>
+      <wsdl:input message="tns:tournamentSoapIn" />
+      <wsdl:output message="tns:tournamentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournamentCardForId">
+      <wsdl:documentation>
+        returns player informations and tournaments in which he has played
+      </wsdl:documentation>
+      <wsdl:input message="tns:tournamentCardForIdSoapIn" />
+      <wsdl:output message="tns:tournamentCardForIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournamentCardForZps">
+      <wsdl:documentation>
+        same as tournamentCardForId
+      </wsdl:documentation>
+      <wsdl:input message="tns:tournamentCardForZpsSoapIn" />
+      <wsdl:output message="tns:tournamentCardForZpsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournamentsByPeriod" parameterOrder="since until vkz bSubs id tname">
+      <wsdl:documentation>
+        lists tournaments in a date range
+      </wsdl:documentation>
+      <wsdl:input message="tns:tournamentsByPeriodSoapIn" />
+      <wsdl:output message="tns:tournamentsByPeriodSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournamentPairings">
+      <wsdl:documentation>
+        pairings in a tournament
+      </wsdl:documentation>
+      <wsdl:input message="tns:tournamentPairingsSoapIn" />
+      <wsdl:output message="tns:tournamentPairingsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournamentPairingsByPlayer" parameterOrder="tcode member">
+      <wsdl:documentation>
+        in progress
+      </wsdl:documentation>
+      <wsdl:input message="tns:tournamentPairingsByPlayerSoapIn" />
+      <wsdl:output message="tns:tournamentPairingsByPlayerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="bestOfFederation" parameterOrder="vkz limit minAge maxAge gender">
+      <wsdl:documentation>
+        member list sorted by rating
+      </wsdl:documentation>
+      <wsdl:input message="tns:bestOfFederationSoapIn" />
+      <wsdl:output message="tns:bestOfFederationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="searchByName" parameterOrder="surename firstname start length">
+      <wsdl:documentation>
+        search members by name
+      </wsdl:documentation>
+      <wsdl:input message="tns:searchByNameSoapIn" />
+      <wsdl:output message="tns:searchByNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="organizations">
+      <wsdl:documentation>
+        list organizations
+      </wsdl:documentation>
+      <wsdl:input message="tns:organizationsSoapIn" />
+      <wsdl:output message="tns:organizationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="layers">
+      <wsdl:documentation>
+        returns all possible layers; even if they dont exist any more
+      </wsdl:documentation>
+      <wsdl:input message="tns:layersSoapIn" />
+      <wsdl:output message="tns:layersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ratingOfficer">
+      <wsdl:documentation>
+        returns name and adress of a rating officer; he has to be in charge
+        otherwise a error is thrown
+      </wsdl:documentation>
+      <wsdl:input message="tns:ratingOfficerSoapIn" />
+      <wsdl:output message="tns:ratingOfficerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="tournamentsByMember" parameterOrder="since until v page number">
+      <wsdl:input message="tns:tournamentsByMemberSoapIn" />
+      <wsdl:output message="tns:tournamentsByMemberSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebdienstSoap" type="tns:WebdienstSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="unionRatingList">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/unionRatingList" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="vkz minAge maxAge gender" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournament">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournament" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="tcode" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournamentCardForId">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournamentCardForId" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="pid" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournamentCardForZps">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournamentCardForZps" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="zps" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournamentsByPeriod">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournamentsByPeriod" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="since until vkz bSubs id tname" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournamentPairings">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournamentPairings" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="tcode" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournamentPairingsByPlayer">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournamentPairingsByPlayer" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="tcode member" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="bestOfFederation">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/bestOfFederation" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="vkz limit minAge maxAge gender" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchByName">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/searchByName" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="surename firstname start length" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="organizations">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/organizations" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="vkz" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="layers">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/layers" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ratingOfficer">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/ratingOfficer" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="assessors" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tournamentsByMember">
+      <soap:operation soapAction="https://dwz.svw.info/services/soap/tournamentsByMember" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="since until v page number" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://dwz.svw.info/services/soap/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Webdienst">
+    <wsdl:port name="WebdienstSoap" binding="tns:WebdienstSoap">
+      <soap:address location="https://dwz.svw.info/services/soap/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

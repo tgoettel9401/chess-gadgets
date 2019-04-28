@@ -37,7 +37,7 @@ public class FilesController {
         this.playerTournamentRepository = playerTournamentRepository;
     }
 
-    @PostMapping("/uploadFile")
+    @PostMapping("api/uploadFile")
     public List<Player> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         playerTournamentRepository.deleteAll();
         playerRepository.deleteAll();
@@ -53,7 +53,7 @@ public class FilesController {
         return playerRepository.saveAll(players);
     }
 
-    @GetMapping("/downloadFile")
+    @GetMapping("api/downloadFile")
     public String toCsv() throws JsonProcessingException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(PlayerForCsv.class).withHeader();

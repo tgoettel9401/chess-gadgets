@@ -12,18 +12,20 @@ export class PlayerService {
 
   constructor(private http: HttpClient) { }
 
+  baseUrl = 'http://localhost:8080/api/';
+
   getAllPlayers(): Observable<any> {
-    let url = 'http://localhost:8080/players';
+    let url = this.baseUrl + 'players';
     return this.http.get(url);
   }
 
   addTournamentsToPlayer(player: Player, tournaments: Tournament[]): Observable<Player> {
-    let url = 'http://localhost:8080/players/' + player.id + '/addTournamentsAsList';
+    let url = this.baseUrl + 'players/' + player.id + '/addTournamentsAsList';
     return this.http.patch<Player>(url, tournaments);
   }
 
   patchPlayer(player: Player): Observable<Player> {
-    let url = 'http://localhost:8080/players/' + player.id;
+    let url = this.baseUrl + 'players/' + player.id;
     return this.http.patch<Player>(url, player)
       .pipe(
         tap((changedPlayer: Player) => console.log('Changed player with id=' + changedPlayer.id)),
@@ -31,16 +33,8 @@ export class PlayerService {
       );
   }
 
-  getTournamentsBetween(player: Player): Observable<any> {
-    let startDate = new Date (2019,0,1);
-    let endDate = new Date (2019,5,23);
-    //let url = encodeURI('http://localhost:8080/players/' + player.id + '/getTournamentsBetween?startDate=' + startDate + '&endDate=' + endDate);
-    let url = 'http://localhost:8080/players/' + player.id + '/getTournamentsBetween?startDate=' + startDate.toISOString() + '&endDate=' + endDate.toISOString();
-    return this.http.get(url);
-  }
-
   getRatings(player: Player): Observable<any> {
-    let url = 'http://localhost:8080/players/' + player.id + '/getRatings';
+    let url = this.baseUrl + 'players/' + player.id + '/getRatings';
     return this.http.get(url);
   }
 
