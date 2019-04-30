@@ -10,7 +10,7 @@
     </parent>
     <groupId>tobias.chess</groupId>
     <artifactId>dsj</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>dsj</name>
     <description>DSJ Gadgets</description>
 
