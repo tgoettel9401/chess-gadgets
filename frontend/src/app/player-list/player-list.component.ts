@@ -29,7 +29,7 @@ export class PlayerListComponent implements OnInit {
 
   ngOnInit() {
     this.getPlayers();
-    this.displayedColumns = ['name', 'pid', 'birthyear', 'mayOld', 'julOld', 'sepOld', 'novOld', 'janNew', 'marNew', 'mayNew', 'buttons'];
+    this.displayedColumns = ['name', 'pid', 'birthyear', 'mayOld', 'julOld', 'sepOld', 'novOld', 'janNew', 'marNew', 'mayNew', 'ratingMin', 'ratingMax', 'buttons'];
   }
 
   getPlayers() {
@@ -188,7 +188,7 @@ export class PlayerListComponent implements OnInit {
             () => {
               newPlayers.push(player);
               this.players = newPlayers;
-              this.updateTable(newPlayers);
+              this.getPlayers();
             }
           )
         }
@@ -251,7 +251,7 @@ export class PlayerListComponent implements OnInit {
 
               }
               this.playerService.patchPlayer(playerOut).subscribe(
-                () => {this.updateTable(players)},
+                () => {this.getPlayers()},
                 error => console.log(error),
               );
             },
@@ -284,10 +284,15 @@ export class PlayerListComponent implements OnInit {
                 tempTournament.tname = tournament.tname.$value;
                 tempTournament.tcode = tournament.tcode.$value;
                 tempTournament.ratingOld = tournament.ratingOld.$value;
-                if (!isNaN(tournament.ratingNew))
-                  tempTournament.ratingNew = tournament.ratingNew.$value;
+
+                if (!tournament.ratingNew && !tournament.ratingOld)
+                  tempTournament.ratingNew = 0;
                 else
-                  tempTournament.ratingNew = tempTournament.ratingOld;
+                  if (!tournament.ratingNew)
+                    tempTournament.ratingNew = tempTournament.ratingOld;
+                  else
+                    tempTournament.ratingNew = tournament.ratingNew.$value;
+
                 tournaments.push(tempTournament);
               }
               playerOut.tournaments = tournaments;

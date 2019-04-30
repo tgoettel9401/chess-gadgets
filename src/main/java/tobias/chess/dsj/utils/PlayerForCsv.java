@@ -28,6 +28,9 @@ public class PlayerForCsv {
     private Integer rating7 = 0;
     private Integer rating8 = 0;
 
+    private Integer ratingMin= 0;
+    private Integer ratingMax= 0;
+
     public PlayerForCsv(Player player) {
         this.pid = player.getPid();
         this.firstName = player.getFirstName();
@@ -42,6 +45,8 @@ public class PlayerForCsv {
         this.rating6 = player.getRatings()[5];
         this.rating7 = player.getRatings()[6];
         this.rating8 = player.getRatings()[7];
+        this.ratingMin = player.getMinRating();
+        this.ratingMax = player.getMaxRating();
     }
 
     public Player returnAsPlayer() {

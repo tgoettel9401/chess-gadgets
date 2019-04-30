@@ -13,6 +13,9 @@ export class Player {
   marNew: number;
   mayNew: number;
 
+  maxRating: number;
+  minRating: number;
+
   // Mode stands for the table-mode
   mode: string;
 

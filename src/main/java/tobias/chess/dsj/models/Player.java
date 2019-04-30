@@ -34,6 +34,9 @@ public class Player {
     @ToString.Exclude
     private Integer[] ratings = new Integer[0];
 
+    private Integer maxRating;
+    private Integer minRating;
+
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

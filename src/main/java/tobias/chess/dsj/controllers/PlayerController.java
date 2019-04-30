@@ -11,8 +11,6 @@ import tobias.chess.dsj.repositories.PlayerTournamentRepository;
 import tobias.chess.dsj.repositories.TournamentRepository;
 
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.Reader;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -79,7 +77,31 @@ public class PlayerController {
             ratings.add(tempRating);
         }
         player.setRatings(ratings.toArray(Integer[]::new));
+        this.getMaxRatingInLastYear(player.getId());
+        this.getMinRatingInLastYear(player.getId());
         return ratings;
+    }
+
+    @GetMapping("api/players/{id}/getMaxRating")
+    public Integer getMaxRatingInLastYear(
+            @PathVariable("id") long id) {
+        Player player = this.playerRepository.findById(id).get();
+        ZonedDateTime startDate = ZonedDateTime.of(2018,5,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime endDate = ZonedDateTime.of(2019,5,1,0,0,0,0, ZoneOffset.UTC);
+        PlayerTournament maxTournament = this.playerTournamentRepository.findFirstByPlayerAndFinishedOnAfterAndFinishedOnBeforeOrderByRatingNewDesc(player, startDate, endDate);
+        player.setMaxRating(maxTournament.getRatingNew());
+        return maxTournament.getRatingNew();
+    }
+
+    @GetMapping("api/players/{id}/getMinRating")
+    public Integer getMinRatingInLastYear(
+            @PathVariable("id") long id) {
+        Player player = this.playerRepository.findById(id).get();
+        ZonedDateTime startDate = ZonedDateTime.of(2018,5,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime endDate = ZonedDateTime.of(2019,5,1,0,0,0,0, ZoneOffset.UTC);
+        PlayerTournament minTournament = this.playerTournamentRepository.findFirstByPlayerAndFinishedOnAfterAndFinishedOnBeforeOrderByRatingNewAsc(player, startDate, endDate);
+        player.setMinRating(minTournament.getRatingNew());
+        return minTournament.getRatingNew();
     }
 
     private List<ZonedDateTime> getDates() {
