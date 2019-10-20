@@ -18,6 +18,11 @@ public class ImportedTournamentEntryInCsv {
     @JsonProperty("Land")
     private String state;
 
+    public String getState() {
+        String tempState = state;
+        return tempState.replace(" ", "");
+    }
+
     @JsonProperty("G")
     private Integer gamesWon;
 
@@ -32,8 +37,7 @@ public class ImportedTournamentEntryInCsv {
 
     public Double getPoints() {
         String tempPoints = points;
-        if (tempPoints.contains(","))
-            tempPoints = tempPoints.replace(",", ".");
+        tempPoints = tempPoints.replace(",", ".");
         return Double.parseDouble(tempPoints);
     }
 
@@ -42,8 +46,7 @@ public class ImportedTournamentEntryInCsv {
 
     public Double getSoBerg() {
         String tempSoBerg = soberg;
-        if (tempSoBerg.contains(","))
-            tempSoBerg = tempSoBerg.replace(",", ".");
+        tempSoBerg = tempSoBerg.replace(",", ".");
         return Double.parseDouble(tempSoBerg);
     }
 
@@ -52,8 +55,7 @@ public class ImportedTournamentEntryInCsv {
 
     public Double getBoardPoints() {
         String tempBoardPoints = boardPoints;
-        if (tempBoardPoints.contains(","))
-            tempBoardPoints = tempBoardPoints.replace(",", ".");
+        tempBoardPoints = tempBoardPoints.replace(",", ".");
         return Double.parseDouble(tempBoardPoints);
     }
 }

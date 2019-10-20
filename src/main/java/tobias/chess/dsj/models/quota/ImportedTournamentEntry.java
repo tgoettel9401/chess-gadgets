@@ -49,8 +49,16 @@ public class ImportedTournamentEntry {
     @JsonIdentityReference(alwaysAsId = true)
     private ImportedTournament importedTournament;
 
-    public RegionalGroup getRegionalGroup() {
+    private RegionalGroup getRegionalGroup() {
         return state.getRegionalGroup();
+    }
+
+    public String getStateName() {
+        return this.getState().getName();
+    }
+
+    public String getRegionalGroupName() {
+        return this.getRegionalGroup().getName();
     }
 
 }

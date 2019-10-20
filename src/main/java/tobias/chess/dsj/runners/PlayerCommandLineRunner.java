@@ -49,8 +49,8 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... strings) {
         this.addPlayers();
-        this.addQuotaTournaments();
         this.addRegionalGroupsAndStates();
+        this.addQuotaTournaments();
     }
 
     private void addPlayers() {
@@ -75,24 +75,25 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     private Set<ImportedTournament> addImportedTournaments(QuotaTournament quotaTournament) {
 
         // Import the tournaments for 2017 and 2018. 2018 also gets an import from a file automatically.
-        ImportedTournament importedTournament1 = new ImportedTournament("2018", quotaTournament);
-        ImportedTournament importedTournament2 = new ImportedTournament("2017", quotaTournament);
-        Set<ImportedTournament> importedTournaments = new HashSet<>(Arrays.asList(importedTournament1, importedTournament2));
+        ImportedTournament importedTournament2018 = new ImportedTournament("2018", quotaTournament);
+        ImportedTournament importedTournament2017 = new ImportedTournament("2017", quotaTournament);
+        ImportedTournament importedTournament2016 = new ImportedTournament("2016", quotaTournament);
+        Set<ImportedTournament> importedTournaments = new HashSet<>(Arrays.asList(importedTournament2018, importedTournament2017, importedTournament2016));
         importedTournamentRepository.saveAll(importedTournaments);
 
-        this.addImportedTournamentEntries(importedTournament1);
+        for (ImportedTournament importedTournament : importedTournaments)
+            this.addImportedTournamentEntries(importedTournament);
 
         return importedTournaments;
     }
 
     private void addImportedTournamentEntries(ImportedTournament importedTournament) {
 
-        Resource resource = new ClassPathResource("csv/U10-2018.csv");
+        Resource resource = new ClassPathResource("csv/U10-" + importedTournament.getName() + ".csv");
 
         ImportedTournament importedTournamentFromCsv = new ImportedTournament();
 
         try {
-            String path = resource.getFile().getAbsolutePath();
             importedTournamentFromCsv = importedTournamentService.importTournament(resource.getInputStream(), importedTournament.getId());
         } catch (IOException e) {
             e.printStackTrace();

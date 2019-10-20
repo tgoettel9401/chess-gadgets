@@ -1,0 +1,118 @@
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <!-- Place Column -->
+  <ng-container matColumnDef="place">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Place </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.place">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- Team Column -->
+  <ng-container matColumnDef="team">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.team">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- State Column -->
+  <ng-container matColumnDef="state">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.stateName">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- RegionalGroup Column -->
+  <ng-container matColumnDef="regionalGroup">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Regional-Group </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.regionalGroupName">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- Avg-DWZ Column -->
+  <ng-container matColumnDef="avgDwz">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg-DWZ </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.avgDwz">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- GamesWon Column -->
+  <ng-container matColumnDef="gamesWon">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> W </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.gamesWon">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- GamesDrawn Column -->
+  <ng-container matColumnDef="gamesDrawn">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> D </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.gamesDrawn">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- GamesLost Column -->
+  <ng-container matColumnDef="gamesLost">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> L </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.gamesLost">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- Points Column -->
+  <ng-container matColumnDef="points">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Points </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.points">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- SoBerg Column -->
+  <ng-container matColumnDef="soBerg">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> SoBerg </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.soBerg">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- BoardPoints Column -->
+  <ng-container matColumnDef="boardPoints">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Board-Points </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <input name="name" matInput [(ngModel)]="element.boardPoints">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+</table>
+
+<mat-paginator [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>

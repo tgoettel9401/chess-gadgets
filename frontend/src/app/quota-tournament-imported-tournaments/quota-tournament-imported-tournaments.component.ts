@@ -27,8 +27,7 @@ export class QuotaTournamentImportedTournamentsComponent implements OnInit {
     this.quotaTournamentService.getAllImportedTournamentsForQuotaTournament(quotaTournament.id)
       .subscribe(
       data => this.importedTournaments = data._embedded.importedTournaments,
-      error => console.log(error),
-        () => console.log(this.importedTournaments)
+      error => console.log(error)
     );
   }
 

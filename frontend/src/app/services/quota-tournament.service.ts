@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {QuotaTournament} from "../models/QuotaTournament";
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +22,13 @@ export class QuotaTournamentService {
   }
 
   getAllImportedTournamentsForQuotaTournament(quotaTournamentId: number): Observable<any> {
-    console.log(quotaTournamentId);
     let url = this.baseUrl + 'quotaTournaments/' + quotaTournamentId + '/importedTournaments';
-    console.log(url);
     return this.http.get(url);
   }
+
+  getAllTournamentEntriesForImportedTournament(importedTournamentId: number): Observable<any> {
+    let url = this.baseUrl + 'importedTournaments/' + importedTournamentId + '/importedTournamentEntries';
+    return this.http.get(url);
+  }
+
 }
