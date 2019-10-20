@@ -2,6 +2,8 @@ package tobias.chess.dsj.runners;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import tobias.chess.dsj.models.playerInformation.Player;
 import tobias.chess.dsj.models.quota.ImportedTournament;
@@ -13,7 +15,9 @@ import tobias.chess.dsj.repositories.quota.ImportedTournamentRepository;
 import tobias.chess.dsj.repositories.quota.QuotaTournamentRepository;
 import tobias.chess.dsj.repositories.quota.RegionalGroupRepository;
 import tobias.chess.dsj.repositories.quota.StateRepository;
+import tobias.chess.dsj.services.ImportedTournamentService;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,16 +31,19 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     private ImportedTournamentRepository importedTournamentRepository;
     private RegionalGroupRepository regionalGroupRepository;
     private StateRepository stateRepository;
+    private ImportedTournamentService importedTournamentService;
 
     @Autowired
     public PlayerCommandLineRunner(PlayerRepository playerRepository, QuotaTournamentRepository quotaTournamentRepository,
                                    ImportedTournamentRepository importedTournamentRepository,
-                                   RegionalGroupRepository regionalGroupRepository, StateRepository stateRepository) {
+                                   RegionalGroupRepository regionalGroupRepository, StateRepository stateRepository,
+                                   ImportedTournamentService importedTournamentService) {
         this.playerRepository = playerRepository;
         this.quotaTournamentRepository = quotaTournamentRepository;
         this.importedTournamentRepository = importedTournamentRepository;
         this.regionalGroupRepository = regionalGroupRepository;
         this.stateRepository = stateRepository;
+        this.importedTournamentService = importedTournamentService;
     }
 
     @Override
@@ -66,11 +73,38 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     }
 
     private Set<ImportedTournament> addImportedTournaments(QuotaTournament quotaTournament) {
+
+        // Import the tournaments for 2017 and 2018. 2018 also gets an import from a file automatically.
         ImportedTournament importedTournament1 = new ImportedTournament("2018", quotaTournament);
         ImportedTournament importedTournament2 = new ImportedTournament("2017", quotaTournament);
         Set<ImportedTournament> importedTournaments = new HashSet<>(Arrays.asList(importedTournament1, importedTournament2));
         importedTournamentRepository.saveAll(importedTournaments);
+
+        this.addImportedTournamentEntries(importedTournament1);
+
         return importedTournaments;
+    }
+
+    private void addImportedTournamentEntries(ImportedTournament importedTournament) {
+
+        Resource resource = new ClassPathResource("csv/U10-2018.csv");
+
+        ImportedTournament importedTournamentFromCsv = new ImportedTournament();
+
+        try {
+            String path = resource.getFile().getAbsolutePath();
+            importedTournamentFromCsv = importedTournamentService.importTournament(resource.getInputStream(), importedTournament.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        importedTournament.setImportedTournamentEntries(importedTournamentFromCsv.getImportedTournamentEntries());
+
+
+
+
+
+
     }
 
     private void addRegionalGroupsAndStates() {
