@@ -3,12 +3,12 @@ package tobias.chess.dsj.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import tobias.chess.dsj.models.Player;
-import tobias.chess.dsj.models.PlayerTournament;
-import tobias.chess.dsj.models.Tournament;
-import tobias.chess.dsj.repositories.PlayerRepository;
-import tobias.chess.dsj.repositories.PlayerTournamentRepository;
-import tobias.chess.dsj.repositories.TournamentRepository;
+import tobias.chess.dsj.models.playerInformation.Player;
+import tobias.chess.dsj.models.playerInformation.PlayerTournament;
+import tobias.chess.dsj.models.playerInformation.Tournament;
+import tobias.chess.dsj.repositories.playerInformation.PlayerRepository;
+import tobias.chess.dsj.repositories.playerInformation.PlayerTournamentRepository;
+import tobias.chess.dsj.repositories.playerInformation.TournamentRepository;
 
 import javax.transaction.Transactional;
 import java.time.ZoneOffset;
@@ -106,7 +106,7 @@ public class PlayerController {
 
     private List<ZonedDateTime> getDates() {
         List<ZonedDateTime> dates = new ArrayList<>();
-        ZonedDateTime date1 = ZonedDateTime.of(2018,3,1,0,0,0,0, ZoneOffset.UTC);
+        ZonedDateTime date1 = ZonedDateTime.of(2019,7,1,0,0,0,0, ZoneOffset.UTC);
         ZonedDateTime date2 = ZonedDateTime.of(2018,5,1,0,0,0,0, ZoneOffset.UTC);
         ZonedDateTime date3 = ZonedDateTime.of(2018,7,1,0,0,0,0, ZoneOffset.UTC);
         ZonedDateTime date4 = ZonedDateTime.of(2018,9,1,0,0,0,0, ZoneOffset.UTC);

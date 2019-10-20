@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import tobias.chess.dsj.models.Player;
-import tobias.chess.dsj.repositories.PlayerRepository;
-import tobias.chess.dsj.repositories.PlayerTournamentRepository;
-import tobias.chess.dsj.utils.CsvUtils;
+import tobias.chess.dsj.models.playerInformation.Player;
+import tobias.chess.dsj.repositories.playerInformation.PlayerRepository;
+import tobias.chess.dsj.repositories.playerInformation.PlayerTournamentRepository;
 import tobias.chess.dsj.utils.PlayerForCsv;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +53,7 @@ public class FilesController {
     @GetMapping("api/downloadFile")
     public String toCsv() throws JsonProcessingException {
         CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(PlayerForCsv.class).withHeader();
+        CsvSchema schema = mapper.schemaFor(PlayerForCsv.class).withHeader().withColumnSeparator(';');
         List<Player> players = playerRepository.findAll();
         List<PlayerForCsv> playersForCsv = new ArrayList<>();
         for(Player player : players) {

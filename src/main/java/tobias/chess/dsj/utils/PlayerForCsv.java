@@ -3,7 +3,7 @@ package tobias.chess.dsj.utils;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tobias.chess.dsj.models.Player;
+import tobias.chess.dsj.models.playerInformation.Player;
 
 @Data
 @NoArgsConstructor

@@ -15,7 +15,7 @@ export class PlayerService {
   baseUrl = 'http://localhost:8080/api/';
 
   getAllPlayers(): Observable<any> {
-    let url = this.baseUrl + 'players';
+    let url = this.baseUrl + 'players?size=1000';
     return this.http.get(url);
   }
 

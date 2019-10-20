@@ -1,0 +1,22 @@
+<br>
+
+<div class="accordion">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let importedTournament of importedTournaments">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{importedTournament.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Last update: {{importedTournament.tsUpdate | date:'medium'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!--<app-tournament-game-per-round [tournament]="tournament" [round]="round"></app-tournament-game-per-round>-->
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<br>
+

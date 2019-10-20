@@ -2,8 +2,8 @@ package tobias.chess.dsj.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tobias.chess.dsj.models.Tournament;
-import tobias.chess.dsj.repositories.TournamentRepository;
+import tobias.chess.dsj.models.playerInformation.Tournament;
+import tobias.chess.dsj.repositories.playerInformation.TournamentRepository;
 
 import java.util.List;
 

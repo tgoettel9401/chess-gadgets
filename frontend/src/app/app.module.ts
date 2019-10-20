@@ -17,11 +17,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LayoutModule} from "@angular/cdk/layout";
 import {NgxSoapModule} from "ngx-soap";
+import { QuotaComponent } from './quota/quota.component';
+import { QuotaTournamentDetailsComponent } from './quota-tournament-details/quota-tournament-details.component';
+import { QuotaTournamentImportedTournamentsComponent } from './quota-tournament-imported-tournaments/quota-tournament-imported-tournaments.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerListComponent,
+    QuotaComponent,
+    QuotaTournamentDetailsComponent,
+    QuotaTournamentImportedTournamentsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,39 @@
+<mat-card *ngIf="quotaTournament">
+  <mat-toolbar>
+    Tournament Details for {{quotaTournament.name}} ({{quotaTournament.year}})
+  </mat-toolbar>
+  <mat-card-content>
+    <form>
+      <mat-tab-group>
+
+        <mat-tab label="Imported Base Tournaments">
+           <app-quota-tournament-imported-tournaments [quotaTournament]="quotaTournament"></app-quota-tournament-imported-tournaments>
+        </mat-tab>
+
+        <!--
+        <mat-tab label="Base Data">
+          <app-tournament-basedata [tournament]="tournament" [mode]="mode"></app-tournament-basedata>
+        </mat-tab>
+
+        <mat-tab *ngIf="mode=='read'||mode=='edit'" label="Player">
+          <app-tournament-playerlist [tournament]="tournament" [mode]="mode"></app-tournament-playerlist>
+        </mat-tab>
+
+        <mat-tab *ngIf="mode=='read'||mode=='edit'" label="Rounds">
+          <app-tournament-roundList [tournament]="tournament" [mode]="mode"></app-tournament-roundList>
+        </mat-tab>
+
+        <mat-tab *ngIf="mode=='read'||mode=='edit'" label="Games">
+          <app-tournament-game-list-overview [tournament]="tournament" [mode]="mode"></app-tournament-game-list-overview>
+        </mat-tab>
+
+        <mat-tab *ngIf="mode=='read'||mode=='edit'" label="Ranking">
+          <app-tournament-ranking [tournament]="tournament" [mode]="mode"></app-tournament-ranking>
+        </mat-tab>
+
+        -->
+
+      </mat-tab-group>
+    </form>
+  </mat-card-content>
+</mat-card>

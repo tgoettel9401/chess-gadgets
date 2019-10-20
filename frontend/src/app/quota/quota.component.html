@@ -1,0 +1,25 @@
+<br> <br>
+
+<mat-card>
+  <mat-toolbar>
+    Tournament-List &nbsp; &nbsp; &nbsp;
+    <a routerLink="/tournament-add">
+      <button mat-raised-button>
+        <mat-icon>add</mat-icon> &nbsp; Add
+      </button>
+    </a>
+  </mat-toolbar>
+  <mat-card-content>
+    <br>
+    <p> This shows the different tournaments, a quota should be calculated for (e.g. DVM U10 2019) </p>
+    <mat-list>
+      <mat-list-item *ngFor="let quotaTournament of quotaTournaments">
+        <a [routerLink]="['/quotaTournamentDetails/', quotaTournament.id]">
+          <button mat-button>
+            {{quotaTournament.name}} ({{quotaTournament.year}})
+          </button>
+        </a>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
