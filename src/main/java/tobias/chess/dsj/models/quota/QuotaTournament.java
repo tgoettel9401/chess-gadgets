@@ -23,7 +23,7 @@ public class QuotaTournament {
 
     private Integer year;
 
-    @OrderBy(value = "name")
+    @OrderBy(value = "year desc")
     @OneToMany(mappedBy = "quotaTournament", fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

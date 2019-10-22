@@ -5,7 +5,7 @@
     <mat-expansion-panel *ngFor="let importedTournament of importedTournaments">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{importedTournament.name}}
+          {{importedTournament.year}}
         </mat-panel-title>
         <mat-panel-description>
           Last update: {{importedTournament.tsUpdate | date:'medium'}}

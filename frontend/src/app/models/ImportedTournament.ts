@@ -1,6 +1,6 @@
 export class ImportedTournament {
   id: number;
-  name: string;
+  year: number;
 
   tsUpdate: Date;
 

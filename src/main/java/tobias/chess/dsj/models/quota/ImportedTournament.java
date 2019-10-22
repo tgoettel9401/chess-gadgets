@@ -23,7 +23,7 @@ public class ImportedTournament {
     @GeneratedValue
     private long id;
 
-    private String name;
+    private Integer year;
 
     @CreationTimestamp
     private LocalDateTime tsCreate;
@@ -44,8 +44,8 @@ public class ImportedTournament {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<ImportedTournamentEntry> importedTournamentEntries = new HashSet<>();
 
-    public ImportedTournament(String name, QuotaTournament quotaTournament) {
-        this.name = name;
+    public ImportedTournament(Integer year, QuotaTournament quotaTournament) {
+        this.year = year;
         this.quotaTournament = quotaTournament;
     }
 }
