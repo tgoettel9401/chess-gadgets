@@ -36,6 +36,7 @@ public class QuotaTournament {
     @JsonManagedReference
     private Set<ImportedTournament> importedTournaments = new HashSet<>();
 
+    @OrderBy(value = "figure desc")
     @OneToMany(mappedBy = "quotaTournament", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<MembershipFigure> membershipFigures = new ArrayList<>();

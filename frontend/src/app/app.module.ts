@@ -34,6 +34,7 @@ import {QuotaComponent} from './quota/quota.component';
 import {QuotaTournamentDetailsComponent} from './quota-tournament-details/quota-tournament-details.component';
 import {QuotaTournamentImportedTournamentsComponent} from './quota-tournament-imported-tournaments/quota-tournament-imported-tournaments.component';
 import {QuotaTournamentImportedTournamentsTableComponent} from './quota-tournament-imported-tournaments-table/quota-tournament-imported-tournaments-table.component';
+import {QuotaTournamentMembershipFiguresComponent} from './quota-tournament-membership-figures/quota-tournament-membership-figures.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {QuotaTournamentImportedTournamentsTableComponent} from './quota-tourname
     QuotaTournamentDetailsComponent,
     QuotaTournamentImportedTournamentsComponent,
     QuotaTournamentImportedTournamentsTableComponent,
+    QuotaTournamentMembershipFiguresComponent,
   ],
   imports: [
     BrowserModule,

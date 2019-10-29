@@ -31,4 +31,9 @@ export class QuotaTournamentService {
     return this.http.get(url);
   }
 
+  getAllMembershipFiguresForQuotaTournament(quotaTournamentId: number): Observable<any> {
+    let url = this.baseUrl + 'quotaTournaments/' + quotaTournamentId + '/membershipFigures';
+    return this.http.get(url);
+  }
+
 }
