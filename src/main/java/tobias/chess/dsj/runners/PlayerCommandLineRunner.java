@@ -6,22 +6,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import tobias.chess.dsj.models.playerInformation.Player;
-import tobias.chess.dsj.models.quota.ImportedTournament;
-import tobias.chess.dsj.models.quota.QuotaTournament;
-import tobias.chess.dsj.models.quota.RegionalGroup;
-import tobias.chess.dsj.models.quota.State;
+import tobias.chess.dsj.models.quota.*;
 import tobias.chess.dsj.repositories.playerInformation.PlayerRepository;
-import tobias.chess.dsj.repositories.quota.ImportedTournamentRepository;
-import tobias.chess.dsj.repositories.quota.QuotaTournamentRepository;
-import tobias.chess.dsj.repositories.quota.RegionalGroupRepository;
-import tobias.chess.dsj.repositories.quota.StateRepository;
+import tobias.chess.dsj.repositories.quota.*;
 import tobias.chess.dsj.services.ImportedTournamentService;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class PlayerCommandLineRunner implements CommandLineRunner {
@@ -32,18 +23,21 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     private RegionalGroupRepository regionalGroupRepository;
     private StateRepository stateRepository;
     private ImportedTournamentService importedTournamentService;
+    private MembershipFigureRepository membershipFigureRepository;
 
     @Autowired
     public PlayerCommandLineRunner(PlayerRepository playerRepository, QuotaTournamentRepository quotaTournamentRepository,
                                    ImportedTournamentRepository importedTournamentRepository,
                                    RegionalGroupRepository regionalGroupRepository, StateRepository stateRepository,
-                                   ImportedTournamentService importedTournamentService) {
+                                   ImportedTournamentService importedTournamentService,
+                                   MembershipFigureRepository membershipFigureRepository) {
         this.playerRepository = playerRepository;
         this.quotaTournamentRepository = quotaTournamentRepository;
         this.importedTournamentRepository = importedTournamentRepository;
         this.regionalGroupRepository = regionalGroupRepository;
         this.stateRepository = stateRepository;
         this.importedTournamentService = importedTournamentService;
+        this.membershipFigureRepository = membershipFigureRepository;
     }
 
     @Override
@@ -68,6 +62,10 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
 
         // Add the ImportedTournaments to QuotaTournaments and update the same.
         quotaTournament.setImportedTournaments(addImportedTournaments(quotaTournament));
+
+        // Add the membership-figures for the tournament.
+        quotaTournament.setMembershipFigures(addMembershipFigures(quotaTournament));
+
         quotaTournamentRepository.save(quotaTournament);
 
     }
@@ -87,6 +85,38 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
         return importedTournaments;
     }
 
+    private List<MembershipFigure> addMembershipFigures(QuotaTournament quotaTournament) {
+
+        // Import the membership-figures for DVM U10 2019.
+        MembershipFigure membershipFigure1 = new MembershipFigure(stateRepository.findFirstByName("Berlin"), 187, quotaTournament);
+        MembershipFigure membershipFigure2 = new MembershipFigure(stateRepository.findFirstByName("Brandenburg"), 252, quotaTournament);
+        MembershipFigure membershipFigure3 = new MembershipFigure(stateRepository.findFirstByName("Bremen"), 50, quotaTournament);
+        MembershipFigure membershipFigure4 = new MembershipFigure(stateRepository.findFirstByName("Hamburg"), 227, quotaTournament);
+        MembershipFigure membershipFigure5 = new MembershipFigure(stateRepository.findFirstByName("Mecklenburg-Vorpommern"), 86, quotaTournament);
+        MembershipFigure membershipFigure6 = new MembershipFigure(stateRepository.findFirstByName("Niedersachsen"), 298, quotaTournament);
+        MembershipFigure membershipFigure7 = new MembershipFigure(stateRepository.findFirstByName("Sachsen-Anhalt"), 656, quotaTournament);
+        MembershipFigure membershipFigure8 = new MembershipFigure(stateRepository.findFirstByName("Schleswig-Holstein"), 138, quotaTournament);
+        MembershipFigure membershipFigure9 = new MembershipFigure(stateRepository.findFirstByName("Nordrhein-Westfalen"), 932, quotaTournament);
+        MembershipFigure membershipFigure10 = new MembershipFigure(stateRepository.findFirstByName("Hessen"), 426, quotaTournament);
+        MembershipFigure membershipFigure11 = new MembershipFigure(stateRepository.findFirstByName("Thüringen"), 190, quotaTournament);
+        MembershipFigure membershipFigure12 = new MembershipFigure(stateRepository.findFirstByName("Rheinland-Pfalz"), 215, quotaTournament);
+        MembershipFigure membershipFigure13 = new MembershipFigure(stateRepository.findFirstByName("Saarland"), 53, quotaTournament);
+        MembershipFigure membershipFigure14 = new MembershipFigure(stateRepository.findFirstByName("Bayern"), 929, quotaTournament);
+        MembershipFigure membershipFigure15 = new MembershipFigure(stateRepository.findFirstByName("Sachsen"), 341, quotaTournament);
+        MembershipFigure membershipFigure16 = new MembershipFigure(stateRepository.findFirstByName("Baden"), 473, quotaTournament);
+        MembershipFigure membershipFigure17 = new MembershipFigure(stateRepository.findFirstByName("Württemberg"), 493, quotaTournament);
+
+        // Create a list of all membershipFigures.
+        List<MembershipFigure> membershipFigures = Arrays.asList(membershipFigure1, membershipFigure2, membershipFigure3,
+                membershipFigure4, membershipFigure5, membershipFigure6, membershipFigure7, membershipFigure8,
+                membershipFigure9, membershipFigure10, membershipFigure11, membershipFigure12, membershipFigure13,
+                membershipFigure14, membershipFigure15, membershipFigure16, membershipFigure17);
+
+        // Save membershipFigures and return the saved instances including IDs.
+        return membershipFigureRepository.saveAll(membershipFigures);
+
+    }
+
     private void addImportedTournamentEntries(ImportedTournament importedTournament) {
 
         Resource resource = new ClassPathResource("csv/U10-" + importedTournament.getYear() + ".csv");
@@ -100,11 +130,6 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
         }
 
         importedTournament.setImportedTournamentEntries(importedTournamentFromCsv.getImportedTournamentEntries());
-
-
-
-
-
 
     }
 

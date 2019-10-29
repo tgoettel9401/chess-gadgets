@@ -1,13 +1,11 @@
 package tobias.chess.dsj.models.quota;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,8 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class ImportedTournament {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private long id;
 
     private Integer year;

@@ -9,7 +9,9 @@ import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -33,6 +35,10 @@ public class QuotaTournament {
     @JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference
     private Set<ImportedTournament> importedTournaments = new HashSet<>();
+
+    @OneToMany(mappedBy = "quotaTournament", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<MembershipFigure> membershipFigures = new ArrayList<>();
 
     public QuotaTournament(String name, Integer year) {
         this.name = name;
