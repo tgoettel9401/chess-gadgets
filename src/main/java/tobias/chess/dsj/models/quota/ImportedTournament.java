@@ -1,6 +1,8 @@
 package tobias.chess.dsj.models.quota;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -34,14 +36,14 @@ public class ImportedTournament {
     @ManyToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonBackReference
     private QuotaTournament quotaTournament;
 
     @OrderBy(value = "place")
     @OneToMany(mappedBy = "importedTournament", fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonManagedReference
     private Set<ImportedTournamentEntry> importedTournamentEntries = new HashSet<>();
 
     public ImportedTournament(Integer year, QuotaTournament quotaTournament) {

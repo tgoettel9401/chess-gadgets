@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import tobias.chess.dsj.models.playerInformation.Player;
+import tobias.chess.dsj.models.quota.ImportedTournament;
+import tobias.chess.dsj.models.quota.QuotaTournament;
 import tobias.chess.dsj.repositories.playerInformation.PlayerRepository;
 import tobias.chess.dsj.repositories.playerInformation.PlayerTournamentRepository;
+import tobias.chess.dsj.repositories.quota.QuotaTournamentRepository;
+import tobias.chess.dsj.services.ImportedTournamentService;
 import tobias.chess.dsj.utils.PlayerForCsv;
 
 import java.io.IOException;
@@ -27,11 +31,18 @@ public class FilesController {
     private static final Logger logger = LoggerFactory.getLogger(FilesController.class);
     private PlayerRepository playerRepository;
     private PlayerTournamentRepository playerTournamentRepository;
+    private ImportedTournamentService importedTournamentService;
+    private QuotaTournamentRepository quotaTournamentRepository;
 
     @Autowired
-    public FilesController(PlayerRepository playerRepository, PlayerTournamentRepository playerTournamentRepository) {
+    public FilesController(PlayerRepository playerRepository,
+                           PlayerTournamentRepository playerTournamentRepository,
+                           ImportedTournamentService importedTournamentService,
+                           QuotaTournamentRepository quotaTournamentRepository) {
         this.playerRepository = playerRepository;
         this.playerTournamentRepository = playerTournamentRepository;
+        this.importedTournamentService = importedTournamentService;
+        this.quotaTournamentRepository = quotaTournamentRepository;
     }
 
     @PostMapping("api/uploadFile")
@@ -61,6 +72,30 @@ public class FilesController {
             playersForCsv.add(tempPlayer);
         }
         return mapper.writer(schema).writeValueAsString(playersForCsv);
+    }
+
+    @PostMapping("api/quota/uploadTournamentForImport")
+    public ImportedTournament uploadTournamentForImport(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("tournamentYear") Integer tournamentYear,
+            @RequestParam("quotaTournamentId") Long quotaTournamentId) throws IOException {
+
+        // Extract QuotaTournament from the provided Id.
+        QuotaTournament quotaTournament;
+        if (quotaTournamentRepository.findById(quotaTournamentId).isPresent())
+            quotaTournament = quotaTournamentRepository.findById(quotaTournamentId).get();
+        else
+            throw new IOException("The QuotaTournament cannot be found!");
+
+        // Verify the year is not empty and a valid year.
+        if (!(tournamentYear > 0 && tournamentYear < 3000))
+            throw new IOException("The Tournament-Year is not valid!");
+
+        // Initialize ImportedTournament
+        ImportedTournament importedTournament = importedTournamentService.createImportedTournament(tournamentYear, quotaTournament);
+
+        // Return the updated ImportedTournament which has been filled with the data from the provided file.
+        return importedTournamentService.importTournament(file.getInputStream(), importedTournament.getId());
     }
 
 }

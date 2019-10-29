@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import tobias.chess.dsj.models.quota.ImportedTournament;
 import tobias.chess.dsj.models.quota.ImportedTournamentEntry;
 import tobias.chess.dsj.models.quota.ImportedTournamentEntryInCsv;
-import tobias.chess.dsj.repositories.quota.ImportedTournamentEntryRepository;
-import tobias.chess.dsj.repositories.quota.ImportedTournamentRepository;
-import tobias.chess.dsj.repositories.quota.RegionalGroupRepository;
-import tobias.chess.dsj.repositories.quota.StateRepository;
+import tobias.chess.dsj.models.quota.QuotaTournament;
+import tobias.chess.dsj.repositories.quota.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,14 +22,24 @@ public class ImportedTournamentService {
     private RegionalGroupRepository regionalGroupRepository;
     private StateRepository stateRepository;
     private ImportedTournamentEntryRepository importedTournamentEntryRepository;
+    private QuotaTournamentRepository quotaTournamentRepository;
 
     @Autowired
     ImportedTournamentService(ImportedTournamentRepository importedTournamentRepository, RegionalGroupRepository regionalGroupRepository,
-                              StateRepository stateRepository, ImportedTournamentEntryRepository importedTournamentEntryRepository) {
+                              StateRepository stateRepository, ImportedTournamentEntryRepository importedTournamentEntryRepository,
+                              QuotaTournamentRepository quotaTournamentRepository) {
         this.importedTournamentRepository = importedTournamentRepository;
         this.regionalGroupRepository = regionalGroupRepository;
         this.stateRepository = stateRepository;
         this.importedTournamentEntryRepository = importedTournamentEntryRepository;
+        this.quotaTournamentRepository = quotaTournamentRepository;
+    }
+
+    public ImportedTournament createImportedTournament(Integer tournamentYear, QuotaTournament quotaTournament) {
+        ImportedTournament importedTournament = importedTournamentRepository.save(new ImportedTournament(tournamentYear, quotaTournament));
+        quotaTournament.getImportedTournaments().add(importedTournament);
+        quotaTournamentRepository.save(quotaTournament);
+        return importedTournament;
     }
 
     public ImportedTournament importTournament(InputStream importStream, Long importedTournamentId) throws IOException {

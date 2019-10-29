@@ -1,5 +1,6 @@
 package tobias.chess.dsj.models.quota;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.*;
 
@@ -19,7 +20,7 @@ public class State {
     @ManyToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonBackReference
     private RegionalGroup regionalGroup;
 
     public State(String name, RegionalGroup regionalGroup) {

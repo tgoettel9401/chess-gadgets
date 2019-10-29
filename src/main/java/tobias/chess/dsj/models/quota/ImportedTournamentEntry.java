@@ -1,5 +1,6 @@
 package tobias.chess.dsj.models.quota;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -46,7 +47,7 @@ public class ImportedTournamentEntry {
     @ManyToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonBackReference
     private ImportedTournament importedTournament;
 
     private RegionalGroup getRegionalGroup() {

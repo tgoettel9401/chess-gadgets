@@ -1,6 +1,10 @@
 package tobias.chess.dsj.models.quota;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -22,6 +26,7 @@ public class RegionalGroup {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonManagedReference
     private Set<State> states = new HashSet<>();
 
     public RegionalGroup(String name) {
