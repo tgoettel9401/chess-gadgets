@@ -33,8 +33,8 @@ public class ImportedTournamentService {
         this.quotaTournamentRepository = quotaTournamentRepository;
     }
 
-    public ImportedTournament createImportedTournament(Integer tournamentYear, QuotaTournament quotaTournament) {
-        ImportedTournament importedTournament = importedTournamentRepository.save(new ImportedTournament(tournamentYear, quotaTournament));
+    public ImportedTournament createImportedTournament(Integer tournamentYear, QuotaTournament quotaTournament, State state) {
+        ImportedTournament importedTournament = importedTournamentRepository.save(new ImportedTournament(tournamentYear, quotaTournament, state));
         quotaTournament.getImportedTournaments().add(importedTournament);
         quotaTournamentRepository.save(quotaTournament);
         return importedTournament;
@@ -99,7 +99,8 @@ public class ImportedTournamentService {
         }
 
         // Build the sum of points
-        double points = importedTournamentEntriesOfTop40AndTop5OfState.stream().mapToDouble(ImportedTournamentEntry::getPoints).sum();
+        double points = importedTournamentEntriesOfTop40AndTop5OfState.stream()
+                .mapToDouble(ImportedTournamentEntry::getPoints).sum();
 
         // And divide the sum by the number of teams (if either points or size is 0 than return 0 instead.
         if (points != 0 && importedTournamentEntriesOfTop40AndTop5OfState.size() != 0)

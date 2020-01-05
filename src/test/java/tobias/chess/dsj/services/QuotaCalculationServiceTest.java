@@ -73,57 +73,61 @@ public class QuotaCalculationServiceTest {
         StateQuotaWithIntermediates quotaBad = this.getQuotaForState(stateQuotaWithIntermediates, "Baden");
         StateQuotaWithIntermediates quotaWur = this.getQuotaForState(stateQuotaWithIntermediates, "Württemberg");
 
-        // Assert that quota is calculated correctly (Before and After HareNiemayer.
+        // Assert AverageTeamPoints are calculated correctly
+        assert (Precision.round(quotaBay.getAverageTeamPoints(), 3) == 40.333);
+        assert (Precision.round(quotaSac.getAverageTeamPoints(), 3) == 45.600);
+        assert (Precision.round(quotaNrw.getAverageTeamPoints(), 3) == 43.800);
+        assert (Precision.round(quotaNds.getAverageTeamPoints(), 3) == 43.850);
+        assert (Precision.round(quotaBer.getAverageTeamPoints(), 3) == 48.800);
+        assert (Precision.round(quotaBre.getAverageTeamPoints(), 3) == 0.000);
+        assert (Precision.round(quotaBra.getAverageTeamPoints(), 3) == 38.000);
+        assert (Precision.round(quotaHam.getAverageTeamPoints(), 3) == 51.000);
+        assert (Precision.round(quotaMvp.getAverageTeamPoints(), 3) == 0.000);
+        assert (Precision.round(quotaSah.getAverageTeamPoints(), 3) == 39.500);
+        assert (Precision.round(quotaSho.getAverageTeamPoints(), 3) == 38.000);
+        assert (Precision.round(quotaHes.getAverageTeamPoints(), 3) == 41.000);
+        assert (Precision.round(quotaThu.getAverageTeamPoints(), 3) == 39.000);
+        assert (Precision.round(quotaRlp.getAverageTeamPoints(), 3) == 16.000);
+        assert (Precision.round(quotaSaa.getAverageTeamPoints(), 3) == 0.000);
+        assert (Precision.round(quotaBad.getAverageTeamPoints(), 3) == 44.500);
+        assert (Precision.round(quotaWur.getAverageTeamPoints(), 3) == 22.000);
 
+        // Assert QuotaBeforeHareNiemayer are calculated correctly
         assert (Precision.round(quotaBay.getCalculationQuotaBeforeHareNiemayer(), 3) == 4.741);
-        assert (quotaBay.getCalculationQuotaAfterHareNiemayer().equals(5.0));
-
         assert (Precision.round(quotaSac.getCalculationQuotaBeforeHareNiemayer(), 3) == 2.229);
-        assert (quotaSac.getCalculationQuotaAfterHareNiemayer().equals(2.0));
-
         assert (Precision.round(quotaNrw.getCalculationQuotaBeforeHareNiemayer(), 3) == 4.810);
-        assert (quotaNrw.getCalculationQuotaAfterHareNiemayer().equals(5.0));
-
         assert (Precision.round(quotaNds.getCalculationQuotaBeforeHareNiemayer(), 3) == 2.011);
-        assert (quotaNds.getCalculationQuotaAfterHareNiemayer().equals(2.0));
-
         assert (Precision.round(quotaBer.getCalculationQuotaBeforeHareNiemayer(), 3) == 1.600);
-        assert (quotaBer.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaBre.getCalculationQuotaBeforeHareNiemayer(), 3) == 0.221);
-        assert (quotaBre.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaBra.getCalculationQuotaBeforeHareNiemayer(), 3) == 1.716);
-        assert (quotaBra.getCalculationQuotaAfterHareNiemayer().equals(2.0));
-
         assert (Precision.round(quotaHam.getCalculationQuotaBeforeHareNiemayer(), 3) == 1.811);
-        assert (quotaHam.getCalculationQuotaAfterHareNiemayer().equals(2.0));
-
         assert (Precision.round(quotaMvp.getCalculationQuotaBeforeHareNiemayer(), 3) == 0.380);
-        assert (quotaMvp.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaSah.getCalculationQuotaBeforeHareNiemayer(), 3) == 3.523);
-        assert (quotaSah.getCalculationQuotaAfterHareNiemayer().equals(3.0));
-
         assert (Precision.round(quotaSho.getCalculationQuotaBeforeHareNiemayer(), 3) == 1.212);
-        assert (quotaSho.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaHes.getCalculationQuotaBeforeHareNiemayer(), 3) == 2.531);
-        assert (quotaHes.getCalculationQuotaAfterHareNiemayer().equals(2.0));
-
         assert (Precision.round(quotaThu.getCalculationQuotaBeforeHareNiemayer(), 3) == 1.458);
-        assert (quotaThu.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaRlp.getCalculationQuotaBeforeHareNiemayer(), 3) == 1.203);
-        assert (quotaRlp.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaSaa.getCalculationQuotaBeforeHareNiemayer(), 3) == 0.234);
-        assert (quotaSaa.getCalculationQuotaAfterHareNiemayer().equals(1.0));
-
         assert (Precision.round(quotaBad.getCalculationQuotaBeforeHareNiemayer(), 3) == 2.794);
-        assert (quotaBad.getCalculationQuotaAfterHareNiemayer().equals(3.0));
-
         assert (Precision.round(quotaWur.getCalculationQuotaBeforeHareNiemayer(), 3) == 2.526);
+
+        // Assert QuotaAfterHareNiemayer are calculated correctly
+        assert (quotaBay.getCalculationQuotaAfterHareNiemayer().equals(5.0));
+        assert (quotaSac.getCalculationQuotaAfterHareNiemayer().equals(2.0));
+        assert (quotaNrw.getCalculationQuotaAfterHareNiemayer().equals(5.0));
+        assert (quotaNds.getCalculationQuotaAfterHareNiemayer().equals(2.0));
+        assert (quotaBer.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaBre.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaBra.getCalculationQuotaAfterHareNiemayer().equals(2.0));
+        assert (quotaHam.getCalculationQuotaAfterHareNiemayer().equals(2.0));
+        assert (quotaMvp.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaSah.getCalculationQuotaAfterHareNiemayer().equals(3.0));
+        assert (quotaSho.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaHes.getCalculationQuotaAfterHareNiemayer().equals(2.0));
+        assert (quotaThu.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaRlp.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaSaa.getCalculationQuotaAfterHareNiemayer().equals(1.0));
+        assert (quotaBad.getCalculationQuotaAfterHareNiemayer().equals(3.0));
         assert (quotaWur.getCalculationQuotaAfterHareNiemayer().equals(2.0));
 
     }
@@ -222,10 +226,13 @@ public class QuotaCalculationServiceTest {
 
     private List<ImportedTournament> initializeImportedTournaments(QuotaTournament quotaTournament, List<State> states) {
 
+        // Find StateSah
+        State stateSah = states.stream().filter(state -> state.getName().equals("Sachsen-Anhalt")).findFirst().orElseThrow();
+
         // Initialize tournaments 2016, 2017 and 2018 for DVM-U10-2019.
-        ImportedTournament importedTournament2016 = new ImportedTournament(2016, quotaTournament);
-        ImportedTournament importedTournament2017 = new ImportedTournament(2017, quotaTournament);
-        ImportedTournament importedTournament2018 = new ImportedTournament(2018, quotaTournament);
+        ImportedTournament importedTournament2016 = new ImportedTournament(2016, quotaTournament, stateSah);
+        ImportedTournament importedTournament2017 = new ImportedTournament(2017, quotaTournament, stateSah);
+        ImportedTournament importedTournament2018 = new ImportedTournament(2018, quotaTournament, stateSah);
         List<ImportedTournament> importedTournaments;
 
         // Initialize ressources for importing the tournaments.

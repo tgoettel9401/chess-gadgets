@@ -13,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 import tobias.chess.dsj.models.playerInformation.Player;
 import tobias.chess.dsj.models.quota.ImportedTournament;
 import tobias.chess.dsj.models.quota.QuotaTournament;
+import tobias.chess.dsj.models.quota.State;
 import tobias.chess.dsj.repositories.playerInformation.PlayerRepository;
 import tobias.chess.dsj.repositories.playerInformation.PlayerTournamentRepository;
 import tobias.chess.dsj.repositories.quota.QuotaTournamentRepository;
+import tobias.chess.dsj.repositories.quota.StateRepository;
 import tobias.chess.dsj.services.ImportedTournamentService;
 import tobias.chess.dsj.utils.PlayerForCsv;
 
@@ -30,16 +32,19 @@ public class FilesController {
     private PlayerTournamentRepository playerTournamentRepository;
     private ImportedTournamentService importedTournamentService;
     private QuotaTournamentRepository quotaTournamentRepository;
+    private StateRepository stateRepository;
 
     @Autowired
     public FilesController(PlayerRepository playerRepository,
                            PlayerTournamentRepository playerTournamentRepository,
                            ImportedTournamentService importedTournamentService,
-                           QuotaTournamentRepository quotaTournamentRepository) {
+                           QuotaTournamentRepository quotaTournamentRepository,
+                           StateRepository stateRepository) {
         this.playerRepository = playerRepository;
         this.playerTournamentRepository = playerTournamentRepository;
         this.importedTournamentService = importedTournamentService;
         this.quotaTournamentRepository = quotaTournamentRepository;
+        this.stateRepository = stateRepository;
     }
 
     @PostMapping("api/uploadFile")
@@ -75,6 +80,7 @@ public class FilesController {
     public ImportedTournament uploadTournamentForImport(
             @RequestParam("file") MultipartFile file,
             @RequestParam("tournamentYear") Integer tournamentYear,
+            @RequestParam("hostState") String stateName,
             @RequestParam("quotaTournamentId") Long quotaTournamentId) throws IOException {
 
         // Extract QuotaTournament from the provided Id.
@@ -88,8 +94,11 @@ public class FilesController {
         if (!(tournamentYear > 0 && tournamentYear < 3000))
             throw new IOException("The Tournament-Year is not valid!");
 
+        // Extract State from the provided StateName.
+        State state = stateRepository.findFirstByName(stateName);
+
         // Initialize ImportedTournament
-        ImportedTournament importedTournament = importedTournamentService.createImportedTournament(tournamentYear, quotaTournament);
+        ImportedTournament importedTournament = importedTournamentService.createImportedTournament(tournamentYear, quotaTournament, state);
 
         // Return the updated ImportedTournament which has been filled with the data from the provided file.
         return importedTournamentService.importTournament(file.getInputStream(), importedTournament.getId());

@@ -24,6 +24,8 @@ public class ImportedTournament {
 
     private Integer year;
 
+    private State host;
+
     @CreationTimestamp
     private LocalDateTime tsCreate;
 
@@ -43,8 +45,9 @@ public class ImportedTournament {
     @JsonManagedReference
     private Set<ImportedTournamentEntry> importedTournamentEntries = new HashSet<>();
 
-    public ImportedTournament(Integer year, QuotaTournament quotaTournament) {
+    public ImportedTournament(Integer year, QuotaTournament quotaTournament, State host) {
         this.year = year;
         this.quotaTournament = quotaTournament;
+        this.host = host;
     }
 }

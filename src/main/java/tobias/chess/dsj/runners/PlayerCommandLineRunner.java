@@ -73,9 +73,9 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     private Set<ImportedTournament> addImportedTournaments(QuotaTournament quotaTournament) {
 
         // Import the tournaments for 2017 and 2018. 2018 also gets an import from a file automatically.
-        ImportedTournament importedTournament2018 = new ImportedTournament(2018, quotaTournament);
-        ImportedTournament importedTournament2017 = new ImportedTournament(2017, quotaTournament);
-        ImportedTournament importedTournament2016 = new ImportedTournament(2016, quotaTournament);
+        ImportedTournament importedTournament2018 = new ImportedTournament(2018, quotaTournament, stateRepository.findFirstByName("Sachsen-Anhalt"));
+        ImportedTournament importedTournament2017 = new ImportedTournament(2017, quotaTournament, stateRepository.findFirstByName("Sachsen-Anhalt"));
+        ImportedTournament importedTournament2016 = new ImportedTournament(2016, quotaTournament, stateRepository.findFirstByName("Sachsen-Anhalt"));
         Set<ImportedTournament> importedTournaments = new HashSet<>(Arrays.asList(importedTournament2018, importedTournament2017, importedTournament2016));
         importedTournamentRepository.saveAll(importedTournaments);
 
