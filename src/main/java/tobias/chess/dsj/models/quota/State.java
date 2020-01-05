@@ -1,6 +1,7 @@
 package tobias.chess.dsj.models.quota;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,6 +30,8 @@ public class State {
     private RegionalGroup regionalGroup;
 
     @OneToMany(mappedBy = "state", fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
+    @ToString.Exclude
     @JsonManagedReference
     private List<MembershipFigure> membershipFigures = new ArrayList<>();
 

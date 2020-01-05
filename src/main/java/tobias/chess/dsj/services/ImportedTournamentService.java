@@ -5,21 +5,20 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tobias.chess.dsj.models.quota.ImportedTournament;
-import tobias.chess.dsj.models.quota.ImportedTournamentEntry;
-import tobias.chess.dsj.models.quota.ImportedTournamentEntryInCsv;
-import tobias.chess.dsj.models.quota.QuotaTournament;
+import tobias.chess.dsj.models.quota.*;
 import tobias.chess.dsj.repositories.quota.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ImportedTournamentService {
 
     private ImportedTournamentRepository importedTournamentRepository;
-    private RegionalGroupRepository regionalGroupRepository;
     private StateRepository stateRepository;
     private ImportedTournamentEntryRepository importedTournamentEntryRepository;
     private QuotaTournamentRepository quotaTournamentRepository;
@@ -29,7 +28,6 @@ public class ImportedTournamentService {
                               StateRepository stateRepository, ImportedTournamentEntryRepository importedTournamentEntryRepository,
                               QuotaTournamentRepository quotaTournamentRepository) {
         this.importedTournamentRepository = importedTournamentRepository;
-        this.regionalGroupRepository = regionalGroupRepository;
         this.stateRepository = stateRepository;
         this.importedTournamentEntryRepository = importedTournamentEntryRepository;
         this.quotaTournamentRepository = quotaTournamentRepository;
@@ -64,6 +62,54 @@ public class ImportedTournamentService {
         return importedTournamentRepository.save(importedTournament);
     }
 
+    public Double getDmpForImportedTournamentAndState(ImportedTournament importedTournament, State state) {
+
+        // Initialize DMP.
+        double dmp;
+
+        // Find all ImportedTournamentEntries for the ImportedTournament and State.
+        List<ImportedTournamentEntry> importedTournamentEntries = importedTournament.getImportedTournamentEntries().stream().filter(entry -> entry.getState().getName().equals(state.getName())).collect(Collectors.toList());
+        List<ImportedTournamentEntry> importedTournamentEntriesOfTop40 = new ArrayList<>(importedTournamentEntries);
+
+        // Calculate DMP as follows
+        // - Only use the Top-40 teams
+        // - If more than 5 teams, then only use the 5 best teams
+        // - TODO: Ignore the worst entry for the state/regionalGroup who hosted the importedTournament
+        //          (only in case it was not the only entry for this state/regionalGroup!).
+        // - Build the sum of all entries and divide by the number of entries.
+
+        // Only use Top-40-Teams.
+        for (ImportedTournamentEntry entry : importedTournamentEntries) {
+            if (entry.getPlace() > 40)
+                importedTournamentEntriesOfTop40.remove(entry);
+        }
+
+        List<ImportedTournamentEntry> importedTournamentEntriesOfTop40AndTop5OfState = new ArrayList<>(importedTournamentEntriesOfTop40);
+
+        // Only use Top 5 teams of state. Therefore list has to be order according to place ascending!
+        importedTournamentEntriesOfTop40.sort(Comparator.comparingInt(ImportedTournamentEntry::getPlace));
+        if (importedTournamentEntriesOfTop40.size() > 5) {
+            int i = 1;
+            for (ImportedTournamentEntry entry : importedTournamentEntriesOfTop40) {
+                if (i > 5) {
+                    importedTournamentEntriesOfTop40AndTop5OfState.remove(entry);
+                }
+                i++;
+            }
+        }
+
+        // Build the sum of points
+        double points = importedTournamentEntriesOfTop40AndTop5OfState.stream().mapToDouble(ImportedTournamentEntry::getPoints).sum();
+
+        // And divide the sum by the number of teams (if either points or size is 0 than return 0 instead.
+        if (points != 0 && importedTournamentEntriesOfTop40AndTop5OfState.size() != 0)
+            dmp = points / importedTournamentEntriesOfTop40AndTop5OfState.size();
+        else
+            dmp = 0;
+
+        return dmp;
+    }
+
     private ImportedTournamentEntry createEntryFromCsvEntry(ImportedTournament importedTournament, ImportedTournamentEntryInCsv importedTournamentEntryInCsv) {
 
         // Initialize the ImportedTournamentEntry and fill with the information from CSV-File.
@@ -85,7 +131,5 @@ public class ImportedTournamentService {
         return importedTournamentEntryRepository.save(importedTournamentEntry);
 
     }
-
-
 
 }

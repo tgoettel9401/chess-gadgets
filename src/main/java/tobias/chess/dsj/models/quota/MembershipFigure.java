@@ -1,6 +1,7 @@
 package tobias.chess.dsj.models.quota;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,22 +20,27 @@ public class MembershipFigure {
 
     @ManyToOne
     @JsonBackReference
-    private State state;
+    private QuotaTournament quotaTournament;
 
     @ManyToOne
     @JsonBackReference
-    private QuotaTournament quotaTournament;
+    private State state;
 
-    private Integer figure;
+    private Double figure;
 
-    public MembershipFigure(State state, Integer figure, QuotaTournament quotaTournament) {
+    public MembershipFigure(QuotaTournament quotaTournament, State state, Double figure) {
+        this.quotaTournament = quotaTournament;
         this.state = state;
         this.figure = figure;
-        this.quotaTournament = quotaTournament;
+    }
+
+    @JsonIgnore
+    public StateFigure getStateFigure() {
+        return new StateFigure(state, figure);
     }
 
     public String getStateName() {
-        return state.getName();
+        return this.getState().getName();
     }
 
 }

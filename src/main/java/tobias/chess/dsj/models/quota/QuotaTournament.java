@@ -38,6 +38,10 @@ public class QuotaTournament {
 
     @OrderBy(value = "figure desc")
     @OneToMany(mappedBy = "quotaTournament", fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference
     private List<MembershipFigure> membershipFigures = new ArrayList<>();
 

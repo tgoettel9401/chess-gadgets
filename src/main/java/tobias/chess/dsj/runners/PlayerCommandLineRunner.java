@@ -88,23 +88,23 @@ public class PlayerCommandLineRunner implements CommandLineRunner {
     private List<MembershipFigure> addMembershipFigures(QuotaTournament quotaTournament) {
 
         // Import the membership-figures for DVM U10 2019.
-        MembershipFigure membershipFigure1 = new MembershipFigure(stateRepository.findFirstByName("Berlin"), 187, quotaTournament);
-        MembershipFigure membershipFigure2 = new MembershipFigure(stateRepository.findFirstByName("Brandenburg"), 252, quotaTournament);
-        MembershipFigure membershipFigure3 = new MembershipFigure(stateRepository.findFirstByName("Bremen"), 50, quotaTournament);
-        MembershipFigure membershipFigure4 = new MembershipFigure(stateRepository.findFirstByName("Hamburg"), 227, quotaTournament);
-        MembershipFigure membershipFigure5 = new MembershipFigure(stateRepository.findFirstByName("Mecklenburg-Vorpommern"), 86, quotaTournament);
-        MembershipFigure membershipFigure6 = new MembershipFigure(stateRepository.findFirstByName("Niedersachsen"), 298, quotaTournament);
-        MembershipFigure membershipFigure7 = new MembershipFigure(stateRepository.findFirstByName("Sachsen-Anhalt"), 656, quotaTournament);
-        MembershipFigure membershipFigure8 = new MembershipFigure(stateRepository.findFirstByName("Schleswig-Holstein"), 138, quotaTournament);
-        MembershipFigure membershipFigure9 = new MembershipFigure(stateRepository.findFirstByName("Nordrhein-Westfalen"), 932, quotaTournament);
-        MembershipFigure membershipFigure10 = new MembershipFigure(stateRepository.findFirstByName("Hessen"), 426, quotaTournament);
-        MembershipFigure membershipFigure11 = new MembershipFigure(stateRepository.findFirstByName("Thüringen"), 190, quotaTournament);
-        MembershipFigure membershipFigure12 = new MembershipFigure(stateRepository.findFirstByName("Rheinland-Pfalz"), 215, quotaTournament);
-        MembershipFigure membershipFigure13 = new MembershipFigure(stateRepository.findFirstByName("Saarland"), 53, quotaTournament);
-        MembershipFigure membershipFigure14 = new MembershipFigure(stateRepository.findFirstByName("Bayern"), 929, quotaTournament);
-        MembershipFigure membershipFigure15 = new MembershipFigure(stateRepository.findFirstByName("Sachsen"), 341, quotaTournament);
-        MembershipFigure membershipFigure16 = new MembershipFigure(stateRepository.findFirstByName("Baden"), 473, quotaTournament);
-        MembershipFigure membershipFigure17 = new MembershipFigure(stateRepository.findFirstByName("Württemberg"), 493, quotaTournament);
+        MembershipFigure membershipFigure1 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Berlin"), 187.0);
+        MembershipFigure membershipFigure2 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Brandenburg"), 252.0);
+        MembershipFigure membershipFigure3 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Bremen"), 50.0);
+        MembershipFigure membershipFigure4 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Hamburg"), 227.0);
+        MembershipFigure membershipFigure5 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Mecklenburg-Vorpommern"), 86.0);
+        MembershipFigure membershipFigure6 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Niedersachsen"), 298.0);
+        MembershipFigure membershipFigure7 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Sachsen-Anhalt"), 656.0);
+        MembershipFigure membershipFigure8 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Schleswig-Holstein"), 138.0);
+        MembershipFigure membershipFigure9 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Nordrhein-Westfalen"), 932.0);
+        MembershipFigure membershipFigure10 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Hessen"), 426.0);
+        MembershipFigure membershipFigure11 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Thüringen"), 190.0);
+        MembershipFigure membershipFigure12 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Rheinland-Pfalz"), 215.0);
+        MembershipFigure membershipFigure13 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Saarland"), 53.0);
+        MembershipFigure membershipFigure14 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Bayern"), 929.0);
+        MembershipFigure membershipFigure15 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Sachsen"), 341.0);
+        MembershipFigure membershipFigure16 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Baden"), 473.0);
+        MembershipFigure membershipFigure17 = new MembershipFigure(quotaTournament, stateRepository.findFirstByName("Württemberg"), 493.0);
 
         // Create a list of all membershipFigures.
         List<MembershipFigure> membershipFigures = Arrays.asList(membershipFigure1, membershipFigure2, membershipFigure3,
