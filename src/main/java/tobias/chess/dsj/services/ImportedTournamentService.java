@@ -75,7 +75,8 @@ public class ImportedTournamentService {
         // - Only use the Top-40 teams
         // - If more than 5 teams, then only use the 5 best teams
         // - TODO: Ignore the worst entry for the state/regionalGroup who hosted the importedTournament
-        //          (only in case it was not the only entry for this state/regionalGroup!).
+        //          (only in case it was not the only entry for this state/regionalGroup and only if the
+        //          importedTournament was not an open tournament!).
         // - Build the sum of all entries and divide by the number of entries.
 
         // Only use Top-40-Teams.
